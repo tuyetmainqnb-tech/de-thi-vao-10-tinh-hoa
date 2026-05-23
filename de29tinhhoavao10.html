@@ -1,0 +1,2035 @@
+cat > /mnt/user-data/outputs/de29_vao10_hn_2026.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề 29 – Thi Thử Vào 10 HN 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg: #0f172a;
+  --bg2: #111827;
+  --bg3: #1e293b;
+  --neon: #00ff9f;
+  --neon2: #00cfff;
+  --red: #ff4757;
+  --gold: #ffd700;
+  --white: #f1f5f9;
+  --muted: #94a3b8;
+  --card: #1a2540;
+  --border: #2d3f60;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Exo 2', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== PASSWORD SCREEN ===== */
+#pw-screen {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 9999;
+  background-image: 
+    radial-gradient(ellipse at 20% 50%, rgba(0,255,159,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,207,255,0.05) 0%, transparent 50%);
+}
+
+.pw-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: min(440px, 90vw);
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0,255,159,0.1);
+}
+
+.pw-logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--neon);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pw-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.pw-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.pw-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.pw-input-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.pw-input-wrap input {
+  width: 100%;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 16px;
+  color: var(--white);
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 3px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.pw-input-wrap input:focus {
+  border-color: var(--neon);
+  box-shadow: 0 0 20px rgba(0,255,159,0.2);
+}
+
+.pw-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  border: none;
+  border-radius: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--bg);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 2px;
+}
+
+.pw-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(0,255,159,0.4); }
+.pw-btn:active { transform: scale(0.97); }
+
+.pw-error {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 12px;
+  min-height: 18px;
+  font-weight: 600;
+}
+
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ===== MAIN EXAM ===== */
+#main { display:none; }
+
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+
+.top-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--neon);
+  letter-spacing: 2px;
+}
+
+.top-score {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.top-score span { color: var(--gold); font-weight: 700; }
+
+.hero {
+  text-align: center;
+  padding: 48px 20px 32px;
+  background: linear-gradient(180deg, rgba(0,255,159,0.03) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(0,255,159,0.1);
+  border: 1px solid rgba(0,255,159,0.3);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--neon);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-family: 'Orbitron', monospace;
+}
+
+.hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.hero h1 span { color: var(--neon); }
+.hero p { color: var(--muted); font-size: 14px; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin: 40px 0 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(0,255,159,0.08), rgba(0,207,255,0.05));
+  border-left: 3px solid var(--neon);
+  border-radius: 0 10px 10px 0;
+}
+
+.section-header h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--neon);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+/* ===== PASSAGE BOXES ===== */
+.passage-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #c8d8f0;
+}
+
+.passage-box h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px;
+  color: var(--neon2);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.passage-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.eng-passage {
+  margin-bottom: 16px; 
+  font-size: 15px; 
+  line-height: 1.7; 
+  color: #e2e8f0; 
+  background: rgba(0,0,0,0.2); 
+  padding: 18px 22px; 
+  border-radius: 8px; 
+  border-left: 3px solid var(--neon);
+  font-family: 'Exo 2', sans-serif;
+}
+
+.glossary-box {
+  background: rgba(0,207,255,0.05);
+  border: 1px solid rgba(0,207,255,0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.glossary-box strong { color: var(--neon2); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; display:block; margin-bottom:8px; }
+.glossary-box ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.glossary-box li { background: rgba(0,207,255,0.1); border-radius: 6px; padding: 3px 10px; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: var(--neon2); }
+
+.vocab-table-wrap { overflow-x: auto; margin: 16px 0; }
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.vocab-table th {
+  background: rgba(0,255,159,0.1);
+  color: var(--neon);
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid var(--border);
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.vocab-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  color: #c8d8f0;
+  line-height: 1.5;
+}
+.vocab-table tr:hover td { background: rgba(255,255,255,0.03); }
+.vocab-table td:first-child { color: var(--neon2); font-family: 'Share Tech Mono', monospace; font-weight: 700; }
+
+.trans-btn {
+  background: rgba(0,207,255,0.1);
+  border: 1px solid rgba(0,207,255,0.3);
+  color: var(--neon2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 8px 0;
+  font-family: 'Exo 2', sans-serif;
+}
+.trans-btn:hover { background: rgba(0,207,255,0.2); }
+
+.trans-content {
+  display: none;
+  background: rgba(0,207,255,0.05);
+  border-left: 3px solid var(--neon2);
+  padding: 14px 16px;
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #b0c4de;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ===== NOTICE BOXES (Q29-30) ===== */
+.notice-wrap { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+
+.notice-visitor {
+  background: #e8f4f8;
+  border: 2px solid #2196F3;
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: #1a1a2e;
+  font-family: Arial, sans-serif;
+  min-width: 240px; flex: 1;
+  text-align: center;
+}
+.notice-visitor .nv-title { font-size: 15px; font-weight: 900; color: #1a237e; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+.notice-visitor .nv-hours { font-size: 13px; margin-bottom: 4px; color: #333; }
+.notice-visitor .nv-last { font-size: 18px; font-weight: 900; color: #1a237e; margin: 10px 0; }
+.notice-visitor .nv-info { font-size: 12px; color: #555; line-height: 1.6; }
+.notice-visitor .nv-icons { font-size: 20px; margin-top: 8px; }
+
+.notice-class {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: #1a1a2e;
+  font-family: Arial, sans-serif;
+  min-width: 240px; flex: 1;
+}
+.notice-class .nc-title { font-size: 20px; font-weight: 900; color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 6px; margin-bottom: 12px; }
+.notice-class .nc-body { font-size: 14px; color: #333; line-height: 1.7; }
+.notice-class .nc-time { font-size: 13px; color: #555; margin-top: 10px; font-style: italic; }
+
+/* ===== QUESTION CARDS ===== */
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.q-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  transition: background 0.3s;
+}
+
+.q-card.correct { border-color: var(--neon); box-shadow: 0 0 20px rgba(0,255,159,0.15); }
+.q-card.correct::before { background: linear-gradient(90deg, transparent, var(--neon), transparent); }
+.q-card.wrong { border-color: var(--red); box-shadow: 0 0 20px rgba(255,71,87,0.15); }
+.q-card.wrong::before { background: linear-gradient(90deg, transparent, var(--red), transparent); }
+
+.q-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  background: rgba(0,255,159,0.1);
+  border: 1px solid rgba(0,255,159,0.3);
+  border-radius: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--neon);
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.q-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.q-text em { font-style: italic; color: var(--neon2); }
+.q-text strong { color: var(--gold); text-decoration: underline; }
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+@media(max-width:600px) { .options-grid { grid-template-columns: 1fr; } }
+
+.opt-btn {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  color: var(--white);
+  transition: all 0.18s;
+  display: flex; align-items: flex-start; gap: 10px;
+  line-height: 1.5;
+}
+
+.opt-btn:hover:not(:disabled) {
+  border-color: var(--neon2);
+  background: rgba(0,207,255,0.08);
+  transform: scale(1.02);
+}
+
+.opt-btn:disabled { cursor: default; }
+
+.opt-btn .opt-label {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08);
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.18s;
+}
+
+.opt-btn.selected-correct {
+  border-color: var(--neon);
+  background: rgba(0,255,159,0.1);
+}
+.opt-btn.selected-correct .opt-label { background: var(--neon); color: var(--bg); }
+
+.opt-btn.selected-wrong {
+  border-color: var(--red);
+  background: rgba(255,71,87,0.1);
+}
+.opt-btn.selected-wrong .opt-label { background: var(--red); color: #fff; }
+
+.opt-btn.show-correct {
+  border-color: var(--neon);
+  background: rgba(0,255,159,0.07);
+}
+.opt-btn.show-correct .opt-label { background: var(--neon); color: var(--bg); }
+
+/* ===== EXPLANATION ===== */
+.explanation {
+  display: none;
+  margin-top: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+.explanation.show { display: block; }
+
+.exp-header {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.exp-correct .exp-header { color: var(--neon); }
+.exp-wrong .exp-header { color: var(--red); }
+
+.exp-correct { border-left: 3px solid var(--neon); }
+.exp-wrong { border-left: 3px solid var(--red); }
+
+.exp-row { margin-bottom: 8px; color: #c8d8f0; }
+.exp-row strong { color: var(--gold); }
+.exp-row .why { color: var(--neon); font-weight: 600; }
+.exp-row .why-wrong { color: var(--red); }
+
+/* ===== SUBMIT BUTTON ===== */
+.submit-wrap { text-align: center; padding: 40px 20px; }
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  border: none;
+  border-radius: 14px;
+  padding: 18px 60px;
+  font-family: 'Orbitron', monospace;
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--bg);
+  cursor: pointer;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 0 0 40px rgba(0,255,159,0.3);
+}
+.submit-btn:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(0,255,159,0.5); }
+
+/* ===== SCORE MODAL ===== */
+#score-modal {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+#score-modal.show { display: flex; }
+
+.score-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: min(480px, 90vw);
+  text-align: center;
+  box-shadow: 0 0 80px rgba(0,255,159,0.2);
+}
+
+.score-emoji { font-size: 64px; margin-bottom: 16px; display: block; }
+
+.score-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.score-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 56px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.score-num.high { color: var(--neon); text-shadow: 0 0 30px rgba(0,255,159,0.5); }
+.score-num.mid { color: var(--gold); text-shadow: 0 0 30px rgba(255,215,0,0.4); }
+.score-num.low { color: var(--red); text-shadow: 0 0 30px rgba(255,71,87,0.4); }
+
+.score-details { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+.score-comment { font-size: 16px; color: var(--white); margin: 16px 0 24px; line-height: 1.6; }
+
+.score-close {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 12px 32px;
+  cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.score-close:hover { border-color: var(--neon); color: var(--neon); }
+
+/* ===== CONFETTI CANVAS ===== */
+#confetti-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 8999;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap { height: 3px; background: var(--border); position: sticky; top: 53px; z-index: 99; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon), var(--neon2)); width: 0%; transition: width 0.4s; }
+
+/* ===== READING Q PASSAGE HIGHLIGHT ===== */
+.rel-passage {
+  background: rgba(255,215,0,0.05);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #b0c4de;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+}
+
+/* Tag chip */
+.tag { display:inline-block; background:rgba(0,255,159,0.1); border:1px solid rgba(0,255,159,0.25); border-radius:4px; padding:1px 8px; font-size:11px; color:var(--neon); margin-right:4px; font-family:'Share Tech Mono',monospace; }
+
+/* Announcement passage */
+.ann-box {
+  background: var(--bg3);
+  border: 1px solid rgba(0,207,255,0.25);
+  border-radius: 12px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #c8d8f0;
+}
+.ann-box .ann-title { font-family:'Orbitron',monospace; font-size:15px; color:var(--white); text-align:center; margin-bottom:4px; font-weight:700; }
+.ann-box .ann-sub { font-size:12px; color:var(--neon2); text-align:center; letter-spacing:2px; margin-bottom:16px; }
+
+.inline-blank {
+  display: inline-block;
+  border-bottom: 2px dashed var(--gold);
+  min-width: 80px;
+  text-align: center;
+  color: var(--gold);
+  font-weight: 700;
+  padding: 0 4px;
+}
+</style>
+</head>
+<body>
+
+<div id="pw-screen">
+  <div class="pw-box">
+    <span class="pw-icon">🔐</span>
+    <div class="pw-logo">40 ĐỀ TINH HOA · MÃ SỐ 29</div>
+    <div class="pw-title">ĐỀ THI THỬ VÀO 10<br>HÀ NỘI 2026</div>
+    <div class="pw-sub">Global Success 9 · GV: Ms Tuyết Mai FTU</div>
+    <div class="pw-input-wrap">
+      <input type="password" id="pw-input" placeholder="Nhập mật khẩu..." autocomplete="off">
+    </div>
+    <button class="pw-btn" onclick="checkPW()">🚀 MỞ ĐỀ THI</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div id="main">
+  <div class="top-bar">
+    <div>
+      <div class="top-title">ĐỀ 29 · VÀO 10 HN 2026</div>
+    </div>
+    <div class="top-score">Đúng: <span id="sc-right">0</span> / Sai: <span id="sc-wrong">0</span> / Chưa làm: <span id="sc-left">40</span></div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <div class="hero">
+    <div class="hero-badge">Lớp 9 · Tiếng Anh · 60 phút</div>
+    <h1>ĐỀ THI THỬ VÀO 10 <span>HÀ NỘI 2026</span></h1>
+    <p>Global Success 9 · Mã số 29 · 40 câu · Click vào đáp án để xem giải thích ngay 🎯</p>
+  </div>
+
+  <div class="container" id="quiz-container"></div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="submitExam()">📊 NỘP BÀI & XEM KẾT QUẢ</button>
+  </div>
+</div>
+
+<div id="score-modal">
+  <div class="score-box">
+    <span class="score-emoji" id="score-emoji">🎉</span>
+    <div class="score-label">KẾT QUẢ BÀI THI</div>
+    <div class="score-num" id="score-num">0/10</div>
+    <div class="score-details" id="score-details"></div>
+    <div class="score-comment" id="score-comment"></div>
+    <button class="score-close" onclick="document.getElementById('score-modal').classList.remove('show')">✖ Đóng</button>
+  </div>
+</div>
+
+<script>
+// ===== PASSWORD =====
+function checkPW() {
+  const val = document.getElementById('pw-input').value;
+  const err = document.getElementById('pw-error');
+  if (val === 'tinhhoa16') {
+    document.getElementById('pw-screen').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+    buildQuiz();
+  } else {
+    err.textContent = '❌ Sai mật khẩu! Hỏi GV Ms Tuyết Mai để lấy mật khẩu.';
+    document.querySelector('.pw-box').classList.add('shake');
+    setTimeout(() => document.querySelector('.pw-box').classList.remove('shake'), 400);
+  }
+}
+document.addEventListener('keydown', e => { if(e.key==='Enter' && document.getElementById('pw-screen').style.display !== 'none') checkPW(); });
+
+// ===== AUDIO =====
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let actx;
+function getDing() {
+  if (!actx) actx = new AudioCtx();
+  const osc = actx.createOscillator();
+  const gain = actx.createGain();
+  osc.connect(gain); gain.connect(actx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, actx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(1320, actx.currentTime + 0.08);
+  gain.gain.setValueAtTime(0.4, actx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.5);
+  osc.start(); osc.stop(actx.currentTime + 0.5);
+}
+
+function playWrongVoice() {
+  if (!window.speechSynthesis) return;
+  const phrases = ['Ối trời ơi làm cái kiểu gì vậy', 'Sai rồi bạn ơi cố gắng lên nhé', 'Ôi không đúng rồi xem lại đi'];
+  const msg = new SpeechSynthesisUtterance(phrases[Math.floor(Math.random()*phrases.length)]);
+  msg.lang = 'vi-VN'; msg.rate = 1; msg.pitch = 1.1; msg.volume = 1;
+  const voices = speechSynthesis.getVoices();
+  const viVoice = voices.find(v => v.lang.startsWith('vi'));
+  if (viVoice) msg.voice = viVoice;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(msg);
+}
+
+// ===== CONFETTI =====
+const canvas = document.getElementById('confetti-canvas');
+const ctx2d = canvas.getContext('2d');
+let confettiPieces = [];
+let confettiAnim = null;
+
+function spawnConfetti() {
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  confettiPieces = Array.from({length:60}, () => ({
+    x: Math.random()*canvas.width, y: -10,
+    r: Math.random()*6+4, vy: Math.random()*3+2,
+    vx: (Math.random()-0.5)*3, rotation: Math.random()*360,
+    rotSpeed: (Math.random()-0.5)*6,
+    color: ['#00ff9f','#00cfff','#ffd700','#ff6b6b','#a78bfa'][Math.floor(Math.random()*5)]
+  }));
+  if (confettiAnim) cancelAnimationFrame(confettiAnim);
+  animateConfetti();
+  setTimeout(() => { cancelAnimationFrame(confettiAnim); ctx2d.clearRect(0,0,canvas.width,canvas.height); }, 2500);
+}
+
+function animateConfetti() {
+  ctx2d.clearRect(0,0,canvas.width,canvas.height);
+  confettiPieces.forEach(p => {
+    p.y += p.vy; p.x += p.vx; p.rotation += p.rotSpeed;
+    ctx2d.save(); ctx2d.translate(p.x, p.y); ctx2d.rotate(p.rotation*Math.PI/180);
+    ctx2d.fillStyle = p.color; ctx2d.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.5);
+    ctx2d.restore();
+  });
+  confettiPieces = confettiPieces.filter(p => p.y < canvas.height+20);
+  if (confettiPieces.length > 0) confettiAnim = requestAnimationFrame(animateConfetti);
+}
+
+// ===== SCORE TRACKING =====
+let answered = {};
+let rightCount = 0, wrongCount = 0;
+
+function updateScore() {
+  document.getElementById('sc-right').textContent = rightCount;
+  document.getElementById('sc-wrong').textContent = wrongCount;
+  document.getElementById('sc-left').textContent = 40 - Object.keys(answered).length;
+  const pct = (Object.keys(answered).length / 40) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+// ===== QUIZ DATA =====
+// correct: 0=A,1=B,2=C,3=D (before shuffle)
+const questions = [
+  // --- Q1-2: PRONUNCIATION ---
+  {
+    id:1, type:'pronunciation',
+    text: 'Question 1: Chọn từ có phần gạch chân phát âm KHÁC với 3 từ còn lại (phần gạch chân: đuôi <em>-ed</em>)',
+    options:['A. wait<u>ed</u>','B. mend<u>ed</u>','C. nак<u>ed</u>','D. fac<u>ed</u>'],
+    correct: 3,
+    exp: {
+      trans: 'Câu 1: Từ nào có phần gạch chân phát âm KHÁC ba từ kia?',
+      optTrans: ['A. waited – đã chờ đợi','B. mended – đã sửa chữa','C. naked – trần trụi (tính từ)','D. faced – đã đối mặt'],
+      why: 'Quy tắc phát âm đuôi -ed: Sau âm /t/ hoặc /d/ → phát âm /ɪd/. Còn lại: sau âm vô thanh → /t/, sau âm hữu thanh → /d/.',
+      choices: [
+        {label:'A. waited', note:'/weɪtɪd/ → sau /t/ → phát âm /ɪd/ ❌ (không phải đáp án)'},
+        {label:'B. mended', note:'/mendɪd/ → sau /d/ → phát âm /ɪd/ ❌ (không phải đáp án)'},
+        {label:'C. naked', note:'/neɪkɪd/ → là tính từ gốc, đuôi -ed phát âm /ɪd/ ❌ (không phải đáp án)'},
+        {label:'D. faced ✅', note:'/feɪst/ → sau âm vô thanh /s/ → phát âm /t/ → KHÁC với 3 từ kia!'},
+    ]
+    }
+  },
+  {
+    id:2, type:'pronunciation',
+    text: 'Question 2: Chọn từ có phần gạch chân phát âm KHÁC với 3 từ còn lại (phần gạch chân: đuôi <em>-age</em>)',
+    options:['A. herit<u>age</u>','B. pass<u>age</u>','C. teen<u>age</u>','D. pack<u>age</u>'],
+    correct: 2,
+    exp: {
+      trans: 'Câu 2: Từ nào có phần gạch chân phát âm KHÁC ba từ kia?',
+      optTrans: ['A. heritage – di sản','B. passage – đoạn văn; hành lang','C. teenage – tuổi teen, vị thành niên','D. package – gói, bưu kiện'],
+      why: 'Phần -age: thường phát âm /ɪdʒ/ (âm ngắn). Riêng "teenage" có -age phát âm là /eɪdʒ/ (âm dài) vì gốc là "teen + age" (tuổi).',
+      choices: [
+        {label:'A. heritage', note:'/ˈherɪtɪdʒ/ → -age = /ɪdʒ/ ❌'},
+        {label:'B. passage', note:'/ˈpæsɪdʒ/ → -age = /ɪdʒ/ ❌'},
+        {label:'C. teenage ✅', note:'/ˈtiːneɪdʒ/ → -age = /eɪdʒ/ ← KHÁC! Đây là đáp án đúng.'},
+        {label:'D. package', note:'/ˈpækɪdʒ/ → -age = /ɪdʒ/ ❌'},
+      ]
+    }
+  },
+
+  // --- Q3-4: STRESS ---
+  {
+    id:3, type:'stress',
+    text: 'Question 3: Chọn từ có trọng âm chính rơi vào vị trí KHÁC với 3 từ còn lại.',
+    options:['A. major','B. effort','C. online','D. product'],
+    correct: 2,
+    exp: {
+      trans: 'Câu 3: Từ nào có trọng âm rơi vào vị trí KHÁC?',
+      optTrans: ['A. major – chính, lớn hơn','B. effort – nỗ lực','C. online – trực tuyến','D. product – sản phẩm'],
+      why: 'Ba từ A, B, D đều có trọng âm ở âm tiết thứ NHẤT. Từ "online" trong tiếng Anh thường có trọng âm ở âm tiết thứ HAI: /ɒnˈlaɪn/.',
+      choices: [
+        {label:'A. major', note:'/ˈmeɪdʒər/ → trọng âm âm tiết 1 ❌'},
+        {label:'B. effort', note:'/ˈefərt/ → trọng âm âm tiết 1 ❌'},
+        {label:'C. online ✅', note:'/ɒnˈlaɪn/ → trọng âm âm tiết 2 ← KHÁC! Đây là đáp án.'},
+        {label:'D. product', note:'/ˈprɒdʌkt/ → trọng âm âm tiết 1 ❌'},
+      ]
+    }
+  },
+  {
+    id:4, type:'stress',
+    text: 'Question 4: Chọn từ có trọng âm chính rơi vào vị trí KHÁC với 3 từ còn lại.',
+    options:['A. economy','B. unemployment','C. communicate','D. particular'],
+    correct: 1,
+    exp: {
+      trans: 'Câu 4: Từ nào có trọng âm rơi vào vị trí KHÁC?',
+      optTrans: ['A. economy – nền kinh tế','B. unemployment – tình trạng thất nghiệp','C. communicate – giao tiếp','D. particular – cụ thể, đặc biệt'],
+      why: 'Ba từ A, C, D đều có trọng âm ở âm tiết thứ HAI. Từ "unemployment" có trọng âm ở âm tiết thứ BA.',
+      choices: [
+        {label:'A. economy', note:'/ɪˈkɒnəmi/ → trọng âm âm tiết 2 ❌'},
+        {label:'B. unemployment ✅', note:'/ˌʌnɪmˈplɔɪmənt/ → trọng âm âm tiết 3 ← KHÁC! Đây là đáp án.'},
+        {label:'C. communicate', note:'/kəˈmjuːnɪkeɪt/ → trọng âm âm tiết 2 ❌'},
+        {label:'D. particular', note:'/pəˈtɪkjʊlər/ → trọng âm âm tiết 2 ❌'},
+      ]
+    }
+  },
+
+  // --- Q5-12: GRAMMAR ---
+  {
+    id:5, type:'grammar',
+    text: 'Question 5: The museum is less crowded during weekdays ________ on weekends, so I enjoy the exhibits more.',
+    options:['A. as','B. than','C. the','D. more'],
+    correct: 1,
+    exp: {
+      trans: 'Bảo tàng ít đông hơn vào các ngày trong tuần ________ vào cuối tuần, vì vậy tôi thích xem các triển lãm hơn.',
+      optTrans: ['A. as – như, bằng (dùng trong so sánh bằng: as...as)','B. than – hơn (dùng trong so sánh hơn kém)','C. the – mạo từ xác định','D. more – nhiều hơn'],
+      why: 'Câu dùng so sánh hơn: "less + adj + THAN" = "ít...hơn". Cấu trúc: less crowded THAN. → Đáp án B.',
+      choices: [
+        {label:'A. as', note:'Dùng "as" trong so sánh bằng: "as ... as". Câu này không phải so sánh bằng ❌'},
+        {label:'B. than ✅', note:'"less crowded THAN" = ít đông hơn → cấu trúc so sánh hơn ✔'},
+        {label:'C. the', note:'Mạo từ, không dùng ở đây ❌'},
+        {label:'D. more', note:'"more than" thì nghĩa khác; ở đây đã có "less" nên không cần "more" ❌'},
+      ]
+    }
+  },
+  {
+    id:6, type:'grammar',
+    text: 'Question 6: Too much screen time can __________ sleep problems, so teenagers should limit late-night scrolling.',
+    options:['A. take care of','B. hang out','C. look up','D. lead to'],
+    correct: 3,
+    exp: {
+      trans: 'Dành quá nhiều thời gian nhìn màn hình có thể ________ các vấn đề về giấc ngủ, vì vậy thanh thiếu niên nên hạn chế lướt điện thoại đêm khuya.',
+      optTrans: ['A. take care of – chăm sóc, trông nom','B. hang out – đi chơi, tụ tập','C. look up – tra cứu, tìm kiếm','D. lead to – dẫn đến, gây ra'],
+      why: '"Lead to + noun" = dẫn đến (hệ quả). Ở đây dùng màn hình nhiều dẫn đến vấn đề giấc ngủ → lead to sleep problems. → Đáp án D.',
+      choices: [
+        {label:'A. take care of', note:'Nghĩa: chăm sóc → "màn hình chăm sóc giấc ngủ" vô nghĩa ❌'},
+        {label:'B. hang out', note:'Nghĩa: đi chơi → không hợp ngữ cảnh ❌'},
+        {label:'C. look up', note:'Nghĩa: tra cứu → "màn hình tra cứu giấc ngủ" vô nghĩa ❌'},
+        {label:'D. lead to ✅', note:'"lead to" = dẫn đến. Too much screen time → leads to sleep problems ✔'},
+      ]
+    }
+  },
+  {
+    id:7, type:'grammar',
+    text: 'Question 7: Teamwork activities help teenagers build __________ skills, such as listening, sharing ideas, and solving conflicts politely.',
+    options:['A. socialize','B. socially','C. society','D. social'],
+    correct: 3,
+    exp: {
+      trans: 'Các hoạt động nhóm giúp thanh thiếu niên xây dựng kỹ năng __________, chẳng hạn như lắng nghe, chia sẻ ý kiến và giải quyết mâu thuẫn một cách lịch sự.',
+      optTrans: ['A. socialize – giao lưu, hòa nhập (động từ)','B. socially – về mặt xã hội (phó từ)','C. society – xã hội (danh từ)','D. social – xã hội, mang tính xã hội (tính từ)'],
+      why: 'Cần TÍNH TỪ để bổ nghĩa cho danh từ "skills". "Social skills" = kỹ năng xã hội → cụm danh từ rất phổ biến. → Đáp án D.',
+      choices: [
+        {label:'A. socialize', note:'Động từ → không bổ nghĩa cho danh từ ❌'},
+        {label:'B. socially', note:'Phó từ → bổ nghĩa cho động từ/tính từ, không dùng trước danh từ ❌'},
+        {label:'C. society', note:'Danh từ → "society skills" không phải cụm từ tự nhiên ❌'},
+        {label:'D. social ✅', note:'Tính từ + skills → "social skills" = kỹ năng xã hội, collocation chuẩn ✔'},
+      ]
+    }
+  },
+  {
+    id:8, type:'grammar',
+    text: 'Question 8: A tourist accepts help with taking a photo.<br><em>Huy: "Do you want me to take a photo of you and your friends?"</em><br><em>Sara: "Yes, please. _________"</em>',
+    options:['A. No, don\'t do that.','B. I\'m not sure. Maybe.','C. That\'d be great, thank you!','D. Why are you asking me?'],
+    correct: 2,
+    exp: {
+      trans: 'Khách du lịch chấp nhận sự giúp đỡ chụp ảnh.<br>Huy: "Bạn có muốn mình chụp ảnh cho bạn và bạn bè của bạn không?"<br>Sara: "Có, vâng. _________"',
+      optTrans: ['A. No, don\'t do that. – Không, đừng làm vậy.','B. I\'m not sure. Maybe. – Tôi không chắc. Có thể.','C. That\'d be great, thank you! – Tuyệt vời quá, cảm ơn bạn!','D. Why are you asking me? – Sao bạn hỏi tôi vậy?'],
+      why: 'Sara đã nói "Yes, please" (đồng ý) → tiếp theo phải là câu thể hiện sự vui vẻ chấp nhận và cảm ơn. "That\'d be great, thank you!" phù hợp hoàn toàn với ngữ cảnh. → Đáp án C.',
+      choices: [
+        {label:'A. No, don\'t do that.', note:'Mâu thuẫn với "Yes, please" ở trước ❌'},
+        {label:'B. I\'m not sure. Maybe.', note:'Không chắc → không phù hợp sau "Yes, please" ❌'},
+        {label:'C. That\'d be great, thank you! ✅', note:'Thể hiện sự vui vẻ đồng ý và cảm ơn → hoàn toàn phù hợp ✔'},
+        {label:'D. Why are you asking me?', note:'Thái độ khó chịu, không phù hợp với đề bài "accepts help" ❌'},
+      ]
+    }
+  },
+  {
+    id:9, type:'grammar',
+    text: 'Question 9: She goes to work by __________ bus every morning to avoid __________ heavy traffic jams.',
+    options:['A. Ø – Ø','B. Ø – the','C. a – the','D. the – the'],
+    correct: 1,
+    exp: {
+      trans: 'Cô ấy đi làm bằng ________ xe buýt mỗi sáng để tránh ________ ùn tắc giao thông nặng nề.',
+      optTrans: ['A. Ø – Ø: không mạo từ – không mạo từ','B. Ø – the: không mạo từ – mạo từ xác định','C. a – the: mạo từ không xác định – mạo từ xác định','D. the – the: mạo từ xác định – mạo từ xác định'],
+      why: '"By bus/car/train/..." = đi bằng phương tiện → KHÔNG dùng mạo từ (Ø). "The heavy traffic jams" = những vụ ùn tắc giao thông (xác định trong bối cảnh cụ thể) → dùng "the". → Đáp án B: Ø – the.',
+      choices: [
+        {label:'A. Ø – Ø', note:'"by bus" đúng (Ø) nhưng "avoid traffic jams" nếu không có "the" thì chung chung quá, thiếu tự nhiên ❌'},
+        {label:'B. Ø – the ✅', note:'"by bus" (Ø) ✔ + "avoid the heavy traffic jams" (the = xác định) ✔'},
+        {label:'C. a – the', note:'"by a bus" sai! Khi đi bằng phương tiện (phương thức di chuyển) không dùng mạo từ ❌'},
+        {label:'D. the – the', note:'"by the bus" chỉ đúng khi nói đến một chiếc xe buýt cụ thể, không phải phương tiện di chuyển ❌'},
+      ]
+    }
+  },
+  {
+    id:10, type:'grammar',
+    text: 'Question 10: The prices of petrol __________ more and more expensive nowadays.',
+    options:['A. has becoming','B. will be becoming','C. had been becoming','D. are becoming'],
+    correct: 3,
+    exp: {
+      trans: 'Giá xăng dầu ngày càng đắt hơn trong thời gian gần đây.',
+      optTrans: ['A. has becoming – sai ngữ pháp','B. will be becoming – sẽ đang trở thành (tương lai tiếp diễn)','C. had been becoming – đã từng đang trở thành (quá khứ hoàn thành tiếp diễn)','D. are becoming – đang trở thành (hiện tại tiếp diễn)'],
+      why: '"Nowadays" = hiện nay → dùng thì HIỆN TẠI TIẾP DIỄN. Chủ ngữ "the prices" (số nhiều) → "are becoming". → Đáp án D.',
+      choices: [
+        {label:'A. has becoming', note:'"has" + V-ing sai hoàn toàn về ngữ pháp ❌'},
+        {label:'B. will be becoming', note:'Tương lai tiếp diễn → không phù hợp với "nowadays" ❌'},
+        {label:'C. had been becoming', note:'Quá khứ hoàn thành tiếp diễn → không phù hợp với "nowadays" ❌'},
+        {label:'D. are becoming ✅', note:'"are becoming more and more + adj" = ngày càng... → đúng thì và cấu trúc ✔'},
+      ]
+    }
+  },
+  {
+    id:11, type:'grammar',
+    text: 'Question 11: If I had enough money, I __________ to a natural wonder and take photos.',
+    options:['A. will go','B. would go','C. should go','D. should have to go'],
+    correct: 1,
+    exp: {
+      trans: 'Nếu tôi có đủ tiền, tôi ________ đến một kỳ quan thiên nhiên và chụp ảnh.',
+      optTrans: ['A. will go – sẽ đi (câu điều kiện loại 1)','B. would go – sẽ đi (câu điều kiện loại 2)','C. should go – nên đi','D. should have to go – nên phải đi (cấu trúc sai)'],
+      why: 'Câu điều kiện loại 2 (giả thiết không có thực ở hiện tại): If + S + V2/were..., S + would/could/might + V. Vế if dùng "had" → đây là loại 2 → vế chính dùng "would + V". → Đáp án B.',
+      choices: [
+        {label:'A. will go', note:'"will" dùng cho điều kiện loại 1 (có thể xảy ra), nhưng đây là loại 2 ❌'},
+        {label:'B. would go ✅', note:'Điều kiện loại 2: "If + had..., would + V" ✔'},
+        {label:'C. should go', note:'"should" mang nghĩa lời khuyên, không phải câu điều kiện ❌'},
+        {label:'D. should have to go', note:'Cấu trúc sai, không tự nhiên trong tiếng Anh ❌'},
+      ]
+    }
+  },
+  {
+    id:12, type:'grammar',
+    text: 'Question 12: We used to __________ plastic bags, but now we bring our own bags to the market.',
+    options:['A. use','B. using','C. to use','D. used'],
+    correct: 0,
+    exp: {
+      trans: 'Chúng tôi đã từng ________ túi nhựa, nhưng bây giờ chúng tôi mang túi của mình đến chợ.',
+      optTrans: ['A. use – dùng (nguyên mẫu không to)','B. using – đang dùng (V-ing)','C. to use – để dùng (to + V)','D. used – đã dùng (V2/V-ed)'],
+      why: 'Cấu trúc: "used to + V (nguyên mẫu)" = đã từng làm gì (thói quen trong quá khứ). → Đáp án A (use).',
+      choices: [
+        {label:'A. use ✅', note:'"used to + V bare" = đã từng làm gì đó trong quá khứ ✔'},
+        {label:'B. using', note:'"used to using" có nghĩa là "quen với" nhưng cần thêm "be": "be used to using" ❌'},
+        {label:'C. to use', note:'"used to to use" – dư "to" ❌'},
+        {label:'D. used', note:'"used to used" sai ngữ pháp ❌'},
+      ]
+    }
+  },
+
+  // --- Q13-16: WORKSHOP ANNOUNCEMENT ---
+  {
+    id:13, type:'announcement',
+    text: 'Question 13: She was guiding a group __________ and pitching a plan with a steady voice.',
+    options:['A. exercise','B. discussion','C. interview','D. audience'],
+    correct: 1,
+    exp: {
+      trans: 'Cô ấy đang dẫn dắt một buổi thảo luận nhóm và trình bày một kế hoạch với giọng nói điềm tĩnh.',
+      optTrans: ['A. exercise – bài tập','B. discussion – cuộc thảo luận','C. interview – buổi phỏng vấn','D. audience – khán giả'],
+      why: '"Guiding a group discussion" = dẫn dắt cuộc thảo luận nhóm → đây là hoạt động phù hợp với workshop lãnh đạo. "Group discussion" là cụm từ cố định trong tiếng Anh. → Đáp án B.',
+      choices: [
+        {label:'A. exercise', note:'"group exercise" không phù hợp với ngữ cảnh "pitching a plan" (trình bày kế hoạch) ❌'},
+        {label:'B. discussion ✅', note:'"group discussion" = thảo luận nhóm → phù hợp hoàn toàn với workshop lãnh đạo ✔'},
+        {label:'C. interview', note:'"group interview" = phỏng vấn nhóm → không đúng ngữ cảnh workshop ❌'},
+        {label:'D. audience', note:'"group audience" không tạo nên cụm từ có nghĩa ❌'},
+      ]
+    }
+  },
+  {
+    id:14, type:'announcement',
+    text: "Question 14: You'll also learn how to build public __________ skills that makes your ideas sound clear, calm, and convincing.",
+    options:['A. talking','B. voice','C. speech','D. speaking'],
+    correct: 3,
+    exp: {
+      trans: 'Bạn cũng sẽ học cách xây dựng kỹ năng ________ trước công chúng giúp ý tưởng của bạn nghe rõ ràng, bình tĩnh và thuyết phục.',
+      optTrans: ['A. talking – nói chuyện (V-ing/danh từ không trang trọng)','B. voice – giọng nói (danh từ)','C. speech – bài diễn văn, lời nói','D. speaking – nói (V-ing/danh từ)'],
+      why: '"Public speaking skills" = kỹ năng nói trước công chúng → đây là collocation CỐ ĐỊNH, rất phổ biến trong tiếng Anh. → Đáp án D.',
+      choices: [
+        {label:'A. talking', note:'"public talking skills" không phải cụm từ tự nhiên ❌'},
+        {label:'B. voice', note:'"public voice skills" không phải collocation chuẩn ❌'},
+        {label:'C. speech', note:'"public speech" là danh từ (bài diễn văn), không ghép với "skills" ❌'},
+        {label:'D. speaking ✅', note:'"public speaking skills" = kỹ năng thuyết trình trước công chúng → collocation cố định ✔'},
+      ]
+    }
+  },
+  {
+    id:15, type:'announcement',
+    text: 'Question 15: Please apply __________ the workshop by July 5.',
+    options:['A. to','B. in','C. for','D. with'],
+    correct: 2,
+    exp: {
+      trans: 'Vui lòng đăng ký ________ workshop trước ngày 5 tháng 7.',
+      optTrans: ['A. to – đến, tới','B. in – trong','C. for – để xin, cho','D. with – với'],
+      why: '"Apply for" = đăng ký, nộp đơn xin (một chương trình, học bổng, workshop,...). Đây là cụm động từ cố định. → Đáp án C.',
+      choices: [
+        {label:'A. apply to', note:'"apply to" = nộp đơn vào (trường học, công ty) → không phù hợp ở đây ❌'},
+        {label:'B. apply in', note:'Không phải cụm từ chuẩn ❌'},
+        {label:'C. apply for ✅', note:'"apply for sth" = đăng ký/nộp đơn để tham gia/nhận gì đó ✔'},
+        {label:'D. apply with', note:'Không phải cụm từ chuẩn ❌'},
+      ]
+    }
+  },
+  {
+    id:16, type:'announcement',
+    text: 'Question 16: We can accept only a limited __________ of participants this round, so don\'t wait too long.',
+    options:['A. amount','B. deal','C. number','D. level'],
+    correct: 2,
+    exp: {
+      trans: 'Chúng tôi chỉ có thể chấp nhận một ________ người tham gia có giới hạn trong đợt này, vì vậy đừng chờ quá lâu.',
+      optTrans: ['A. amount – lượng (dùng cho danh từ không đếm được)','B. deal – thỏa thuận; mức độ (a great deal of)','C. number – số lượng (dùng cho danh từ đếm được)','D. level – mức độ, cấp độ'],
+      why: '"Participants" (người tham gia) là danh từ ĐẾM ĐƯỢC → dùng "number". "A limited number of + danh từ đếm được" = một số lượng hạn chế → collocation chuẩn. → Đáp án C.',
+      choices: [
+        {label:'A. amount', note:'"amount" dùng với danh từ không đếm được: "a large amount of water" ❌'},
+        {label:'B. deal', note:'"a great deal of" = rất nhiều (không đếm được), không dùng "a limited deal" ❌'},
+        {label:'C. number ✅', note:'"a limited number of participants" = số lượng người tham gia hạn chế ✔'},
+        {label:'D. level', note:'"a limited level" không phải collocation tự nhiên trong ngữ cảnh này ❌'},
+      ]
+    }
+  },
+
+  // --- Q17-18: TEXT ARRANGEMENT ---
+  {
+    id:17, type:'text_arrangement',
+    text: 'Question 17: Chọn câu mở đầu phù hợp nhất cho đoạn văn về thời gian rảnh (leisure time):<br><small style="color:var(--muted)">[Đoạn văn nói về: kế hoạch thời gian rảnh, giải trí sau ngày học dài, chọn hoạt động có mục đích để giảm stress]</small>',
+    options:[
+      'A. If you spend more money on entertainment, your free time will feel better.',
+      'B. Because free hours are limited, people should use leisure only for productivity.',
+      'C. Leisure is meaningful only when it happens outdoors, far away from screens.',
+      'D. A good leisure plan mixes rest, connection, and small growth without pressure.'
+    ],
+    correct: 3,
+    exp: {
+      trans: 'Câu 17: Chọn câu mở đầu phù hợp nhất cho đoạn văn.',
+      optTrans: [
+        'A. Nếu bạn chi nhiều tiền hơn cho giải trí, thời gian rảnh của bạn sẽ cảm thấy tốt hơn.',
+        'B. Vì giờ rảnh có hạn, mọi người chỉ nên dùng thời gian rảnh cho công việc hiệu quả.',
+        'C. Thời gian rảnh chỉ có ý nghĩa khi diễn ra ngoài trời, xa màn hình.',
+        'D. Một kế hoạch thời gian rảnh tốt kết hợp nghỉ ngơi, kết nối và phát triển nhỏ mà không tạo áp lực.'
+      ],
+      why: 'Câu mở đầu phải bao quát nội dung toàn đoạn. Đoạn văn nói về: nghỉ ngơi sau học, chọn hoạt động (game, nhạc, nấu ăn, đi bộ), mục đích để giảm stress → Câu D bao quát nhất: "nghỉ ngơi + kết nối + phát triển". → Đáp án D.',
+      choices: [
+        {label:'A', note:'Đề cập tiền bạc → không liên quan đến nội dung đoạn văn ❌'},
+        {label:'B', note:'Nói chỉ dùng rảnh cho "productivity" → mâu thuẫn với đoạn văn nói về sở thích như game, nhạc ❌'},
+        {label:'C', note:'Nói chỉ ngoài trời mới có ý nghĩa → mâu thuẫn vì đoạn nói cả game online ❌'},
+        {label:'D ✅', note:'"rest, connection, small growth without pressure" → khái quát đúng tinh thần toàn đoạn ✔'},
+      ]
+    }
+  },
+  {
+    id:18, type:'text_arrangement',
+    text: 'Question 18: Sắp xếp các câu (a–c) theo đúng thứ tự để đoạn văn mạch lạc:<br><em>a. Choosing one activity, like drawing or playing badminton, can make you feel present.</em><br><em>b. By contrast, if you always scroll without stopping, your brain may feel tired but not satisfied.</em><br><em>c. After that, a short break for water or stretching can keep your energy steady.</em>',
+    options:['A. a – b – c','B. b – a – c','C. a – c – b','D. b – c – a'],
+    correct: 1,
+    exp: {
+      trans: 'Câu 18: Sắp xếp đúng thứ tự a, b, c.\na. Chọn một hoạt động, như vẽ hoặc cầu lông, có thể giúp bạn sống trong hiện tại.\nb. Ngược lại, nếu bạn luôn lướt điện thoại không dừng, não bạn có thể mệt nhưng không thỏa mãn.\nc. Sau đó, nghỉ ngơi ngắn với nước hoặc giãn cơ có thể giữ năng lượng ổn định.',
+      optTrans: ['A. a–b–c','B. b–a–c','C. a–c–b','D. b–c–a'],
+      why: 'Logic: b (đối lập – lướt điện thoại không tốt) → a (giải pháp: chọn 1 hoạt động cụ thể) → c (sau đó: nghỉ ngơi ngắn). "By contrast" ở đầu câu b chỉ sự đối lập với ý trước → b đứng đầu. "After that" ở câu c chỉ điều xảy ra SAU câu a. → Đáp án B (b–a–c).',
+      choices: [
+        {label:'A. a–b–c', note:'"By contrast" ở câu b cần có ý đối lập trước nó → b không thể đứng sau a ❌'},
+        {label:'B. b–a–c ✅', note:'b (đối lập lướt điện thoại) → a (chọn 1 hoạt động) → c (nghỉ ngơi sau đó) ✔'},
+        {label:'C. a–c–b', note:'"By contrast" ở câu b không phù hợp đứng sau câu c ❌'},
+        {label:'D. b–c–a', note:'"After that" ở câu c cần ý trước nói về hoạt động cụ thể, nhưng b chỉ nói về lướt điện thoại ❌'},
+      ]
+    }
+  },
+
+  // --- Q19-24: POWER OF COLLABORATION ---
+  {
+    id:19, type:'reading_fill',
+    text: 'Question 19: In any successful organization, the ability to __________ a team is essential.',
+    options:['A. work as together','B. work together as','C. together work as','D. as work together'],
+    correct: 1,
+    exp: {
+      trans: 'Trong bất kỳ tổ chức thành công nào, khả năng ________ một nhóm là điều cần thiết.',
+      optTrans: ['A. work as together (sai thứ tự)','B. work together as (đúng thứ tự)','C. together work as (sai thứ tự)','D. as work together (sai thứ tự)'],
+      why: '"Work together as a team" = làm việc cùng nhau như một đội. Phó từ "together" đứng SAU động từ "work". → Đáp án B: work together as (a team).',
+      choices: [
+        {label:'A. work as together', note:'"as" không đứng trước "together" ❌'},
+        {label:'B. work together as ✅', note:'"work together as a team" = cụm từ chuẩn ✔'},
+        {label:'C. together work as', note:'Phó từ "together" không đứng trước động từ ❌'},
+        {label:'D. as work together', note:'Sai thứ tự hoàn toàn ❌'},
+      ]
+    }
+  },
+  {
+    id:20, type:'reading_fill',
+    text: 'Question 20: __________ people cooperate, they can generate innovative ideas that might not be possible for an individual working alone.',
+    options:['A. When','B. Unless','C. Since','D. Just as'],
+    correct: 0,
+    exp: {
+      trans: '________ mọi người hợp tác, họ có thể tạo ra những ý tưởng sáng tạo mà một cá nhân làm việc một mình không thể thực hiện được.',
+      optTrans: ['A. When – khi','B. Unless – trừ khi (điều kiện phủ định)','C. Since – từ khi; vì','D. Just as – ngay khi; cũng như'],
+      why: '"When people cooperate" = khi mọi người hợp tác → mệnh đề thời gian/điều kiện chung. Câu mang ý nghĩa khái quát: "khi...thì". → Đáp án A.',
+      choices: [
+        {label:'A. When ✅', note:'"When people cooperate" = khi mọi người hợp tác → nghĩa khái quát, logic ✔'},
+        {label:'B. Unless', note:'"Unless" = trừ khi (không hợp tác) → nghĩa ngược lại ❌'},
+        {label:'C. Since', note:'"Since" thường nói về thời gian trong quá khứ hoặc lý do cụ thể, không phù hợp ❌'},
+        {label:'D. Just as', note:'"Just as" = ngay khi/cũng như → không hợp ngữ cảnh ❌'},
+      ]
+    }
+  },
+  {
+    id:21, type:'reading_fill',
+    text: 'Question 21: Effective communication always __________ a vital part in this process.',
+    options:['A. gets','B. has','C. plays','D. picks'],
+    correct: 2,
+    exp: {
+      trans: 'Giao tiếp hiệu quả luôn ________ một vai trò quan trọng trong quá trình này.',
+      optTrans: ['A. gets a vital part – không phải collocation','B. has a vital part – không phải collocation','C. plays a vital part – đóng một vai trò quan trọng','D. picks a vital part – không phải collocation'],
+      why: '"Play a part/role" = đóng một vai trò → COLLOCATION CỐ ĐỊNH. "Play a vital part in sth" = đóng vai trò quan trọng trong việc gì. → Đáp án C.',
+      choices: [
+        {label:'A. gets', note:'"gets a part" không phải collocation ❌'},
+        {label:'B. has', note:'"has a part" không phải cách dùng tự nhiên ❌'},
+        {label:'C. plays ✅', note:'"plays a vital part/role in" = đóng vai trò quan trọng → collocation chuẩn ✔'},
+        {label:'D. picks', note:'"picks a part" nghĩa hoàn toàn khác ❌'},
+      ]
+    }
+  },
+  {
+    id:22, type:'reading_fill',
+    text: 'Question 22: Members __________ to share their opinions openly and listen to others\' suggestions.',
+    options: ['A. should', 'B. must', 'C. ought', 'D. could'],
+    correct: 2,
+    exp: {
+      trans: 'Các thành viên ________ chia sẻ ý kiến một cách cởi mở và lắng nghe gợi ý của người khác.',
+      optTrans: [
+        'A. should – nên (lời khuyên, khuyến nghị)',
+        'B. must – phải (bắt buộc mạnh)',
+        'C. ought (to) – nên (nhưng cần "to")',
+        'D. could – có thể (khả năng/xin phép)'
+      ],
+      why: 'Câu đưa ra lời KHUYÊN/KHUYẾN NGHỊ nhẹ nhàng cho thành viên nhóm. Tuy nhiên, vì đằng sau chỗ trống đã có sẵn giới từ "to" ("to share"), nên "ought" là động từ khuyết thiếu duy nhất phù hợp về mặt ngữ pháp. Các từ còn lại (should, must, could) đều cộng trực tiếp với V-nguyên thể không "to". → Đáp án C.',
+      choices: [
+        {label: 'A. should', note: '"should + V" (không có "to") → sai ngữ pháp vì đề bài đã có sẵn "to" ❌'},
+        {label: 'B. must', note: '"must" quá mạnh (bắt buộc), và không đi kèm "to" ❌'},
+        {label: 'C. ought ✅', note: 'Đằng sau đã có "to" nên "ought to share" là hoàn toàn chính xác ✔'},
+        {label: 'D. could', note: '"could" mang nghĩa khả năng/xin phép, không phải khuyến nghị và không đi kèm "to" ❌'}
+      ]
+    }
+  },
+  {
+    id:23, type:'reading_fill',
+    text: 'Question 23: Consequently, a team that communicates well can solve problems __________.',
+    options:['A. quickly and more easily','B. quickly easily or more','C. more quickly or easily','D. more easily and quickly'],
+    correct: 3,
+    exp: {
+      trans: 'Do đó, một đội giao tiếp tốt có thể giải quyết vấn đề __________.',
+      optTrans: ['A. quickly and more easily – không đối xứng (quickly không có more)','B. quickly easily or more – sai ngữ pháp','C. more quickly or easily – "or" sai, phải dùng "and"','D. more easily and quickly – đúng, cả hai đều có "more" (ngầm hiểu)'],
+      why: '"More easily and quickly" = nhanh hơn và dễ dàng hơn. "More" được hiểu là áp dụng cho cả hai phó từ (more easily AND [more] quickly). Đây là cách diễn đạt đối xứng, tự nhiên. → Đáp án D.',
+      choices: [
+        {label:'A. quickly and more easily', note:'Không đối xứng: "quickly" không có "more", "more easily" lại có → thiếu nhất quán ❌'},
+        {label:'B. quickly easily or more', note:'Sai ngữ pháp hoàn toàn ❌'},
+        {label:'C. more quickly or easily', note:'"or" không tự nhiên ở đây; nên dùng "and" ❌'},
+        {label:'D. more easily and quickly ✅', note:'"more easily and quickly" → đối xứng, tự nhiên ✔'},
+      ]
+    }
+  },
+  {
+    id:24, type:'reading_fill',
+    text: 'Question 24: For the projects __________, success depends on trust and mutual respect.',
+    options:['A. that we work on','B. which on we work','C. whom we work on','D. that work on we'],
+    correct: 0,
+    exp: {
+      trans: 'Đối với những dự án mà chúng tôi ________, sự thành công phụ thuộc vào niềm tin và sự tôn trọng lẫn nhau.',
+      optTrans: ['A. that we work on – mà chúng tôi làm việc trên đó (đúng)','B. which on we work – sai thứ tự','C. whom we work on – "whom" chỉ người, không dùng cho "projects"','D. that work on we – sai, "we" phải là chủ ngữ của mệnh đề quan hệ phụ'],
+      why: '"The projects that we work on" = những dự án mà chúng tôi làm. Đây là mệnh đề quan hệ: "that" làm tân ngữ của "work on". Giới từ "on" đứng cuối câu. → Đáp án A.',
+      choices: [
+        {label:'A. that we work on ✅', note:'"projects that we work on" → "that" = tân ngữ của "work on", giới từ cuối ✔'},
+        {label:'B. which on we work', note:'Sai thứ tự: "which" không đặt sau "on" theo cách này ❌'},
+        {label:'C. whom we work on', note:'"whom" chỉ dùng cho người, không dùng cho "projects" ❌'},
+        {label:'D. that work on we', note:'"we" phải là chủ ngữ của mệnh đề quan hệ: "that we work on" ❌'},
+      ]
+    }
+  },
+
+  // --- Q25-26: SENTENCE MEANING ---
+  {
+    id:25, type:'sentence_meaning',
+    text: 'Question 25: "Don\'t worry. I\'ll give you the answer by the end of the lesson," Tom said to Janet.',
+    options:[
+      'A. Tom suggested giving Janet the answer by the end of the lesson.',
+      'B. Tom promised to give Janet the answer by the end of the lesson.',
+      'C. Tom insisted on giving Janet the answer by the end of the lesson.',
+      'D. Tom offered to give Janet the answer by the end of the lesson.'
+    ],
+    correct: 1,
+    exp: {
+      trans: '"Đừng lo lắng. Tôi sẽ đưa cho bạn câu trả lời trước khi kết thúc bài học," Tom nói với Janet.',
+      optTrans: [
+        'A. Tom gợi ý đưa cho Janet câu trả lời.',
+        'B. Tom hứa đưa cho Janet câu trả lời.',
+        'C. Tom nhất quyết đưa cho Janet câu trả lời.',
+        'D. Tom đề nghị đưa cho Janet câu trả lời.'
+      ],
+      why: '"Don\'t worry, I\'ll..." = Đừng lo, TÔI SẼ... → Tom đang đưa ra LỜI HỨA với Janet. "Promise to do sth" = hứa làm gì. → Đáp án B.',
+      choices: [
+        {label:'A. suggested', note:'"Suggest" = gợi ý → cấu trúc "suggest + V-ing" hoặc "suggest that...", không dùng lời trấn an "Don\'t worry" ❌'},
+        {label:'B. promised ✅', note:'"I\'ll do..." + "Don\'t worry" = LỜI HỨA → "promised to give" ✔'},
+        {label:'C. insisted on', note:'"Insist on" = nhất quyết, khăng khăng → không phù hợp với giọng điệu trấn an ❌'},
+        {label:'D. offered', note:'"Offer" = đề nghị giúp đỡ → gần đúng nhưng "Don\'t worry" thể hiện lời HỨA mạnh hơn đề nghị ❌'},
+      ]
+    }
+  },
+  {
+    id:26, type:'sentence_meaning',
+    text: 'Question 26: As she saved more money, she bought more books.',
+    options:[
+      'A. When she saved a lot of money, she bought more and more books.',
+      'B. The more money she saved, the better books she bought.',
+      'C. The more money she saved, the best books she bought.',
+      'D. The more money she saved, the more books she bought.'
+    ],
+    correct: 3,
+    exp: {
+      trans: 'Khi cô ấy tiết kiệm được nhiều tiền hơn, cô ấy mua nhiều sách hơn.',
+      optTrans: [
+        'A. Khi cô ấy tiết kiệm được nhiều tiền, cô ấy mua ngày càng nhiều sách hơn.',
+        'B. Cô ấy tiết kiệm được càng nhiều tiền, cô ấy mua sách càng tốt hơn.',
+        'C. (Sai cú pháp: "the best" không dùng trong cấu trúc này)',
+        'D. Cô ấy tiết kiệm được càng nhiều tiền, cô ấy mua càng nhiều sách hơn.'
+      ],
+      why: 'Câu gốc: "more money → more books" = tỉ lệ thuận. Cấu trúc: "The more..., the more..." = càng...càng... → Đáp án D.',
+      choices: [
+        {label:'A', note:'Thay đổi nghĩa: "a lot of money" không phải "more money"; "more and more" không giống ý gốc ❌'},
+        {label:'B', note:'"the better books" sai: câu gốc không nói về chất lượng sách mà là số lượng ❌'},
+        {label:'C', note:'"the best" không dùng trong cấu trúc "the more..., the + so sánh hơn" ❌'},
+        {label:'D ✅', note:'"The more money she saved, the more books she bought" → đúng cấu trúc, đúng nghĩa ✔'},
+      ]
+    }
+  },
+
+  // --- Q27-28: SENTENCE BUILDING ---
+  {
+    id:27, type:'sentence_build',
+    text: 'Question 27: The tour guide / suggest / we / wear / comfortable shoes / for / the walk.',
+    options:[
+      'A. The tour guide suggests us to wear comfortable shoes for the walk.',
+      'B. The tour guide suggests that we wear comfortable shoes for the walk.',
+      'C. The tour guide suggested that we wearing comfortable shoes for the walk.',
+      'D. The tour guide suggests wearing that we wear comfortable shoes for the walk.'
+    ],
+    correct: 1,
+    exp: {
+      trans: 'Hướng dẫn viên du lịch gợi ý rằng chúng tôi hãy mang giày thoải mái cho buổi đi bộ.',
+      optTrans: [
+        'A. ...gợi ý cho chúng tôi mang (sai cấu trúc)',
+        'B. ...gợi ý rằng chúng tôi nên mang (đúng)',
+        'C. ...gợi ý rằng chúng tôi đang mang (sai)',
+        'D. ...gợi ý mang rằng chúng tôi mang (sai)'
+      ],
+      why: '"Suggest + that + S + V (nguyên thể)" = gợi ý rằng ai đó nên làm gì. KHÔNG dùng "suggest + sb + to V". → Đáp án B.',
+      choices: [
+        {label:'A', note:'"suggest sb to V" SAI! "Suggest" không theo sau bằng tân ngữ + to V ❌'},
+        {label:'B ✅', note:'"suggest that + S + V (bare)" = đúng cấu trúc. Thì hiện tại (suggests) → phù hợp ✔'},
+        {label:'C', note:'"that we wearing" sai ngữ pháp (cần V nguyên thể, không dùng V-ing) ❌'},
+        {label:'D', note:'Cấu trúc lặp và rối nghĩa ❌'},
+      ]
+    }
+  },
+  {
+    id:28, type:'sentence_build',
+    text: 'Question 28: I / turn / lamp, / but / it / not work, / so / I / check / the plug.',
+    options:[
+      'A. I turned on the lamp, but it didn\'t work, so I checked the plug.',
+      'B. I turned off the lamp, but it not worked, so I check the plug.',
+      'C. I turned on a lamp, but it didn\'t work, because I checked the plug.',
+      'D. I turned at the lamp, so it didn\'t work, but I checked the plug.'
+    ],
+    correct: 0,
+    exp: {
+      trans: 'Tôi bật đèn lên, nhưng nó không hoạt động, vì vậy tôi kiểm tra phích cắm.',
+      optTrans: [
+        'A. Tôi bật đèn lên, nhưng nó không hoạt động, vì vậy tôi kiểm tra phích cắm. (đúng)',
+        'B. Tôi tắt đèn, nhưng nó không hoạt động (sai ngữ pháp), vì vậy tôi kiểm tra (sai thì)',
+        'C. Tôi bật một chiếc đèn, nhưng nó không hoạt động, vì tôi kiểm tra (sai liên từ)',
+        'D. Tôi bật tại đèn (sai giới từ), vì vậy... nhưng (ngược liên từ)'
+      ],
+      why: '"Turn on" = bật (đèn); "didn\'t work" = quá khứ phủ định đúng; "so" = vì vậy; "checked" = quá khứ đơn đúng. → Đáp án A.',
+      choices: [
+        {label:'A ✅', note:'"turned on" (bật) ✔, "didn\'t work" ✔, "so" ✔, "checked" ✔ → câu hoàn toàn đúng ✔'},
+        {label:'B', note:'"turned off" = tắt (sai ý); "it not worked" sai ngữ pháp (phải: it didn\'t work) ❌'},
+        {label:'C', note:'"because" (vì) sai liên từ; nên dùng "so" (vì vậy); "a lamp" → mạo từ không tự nhiên ❌'},
+        {label:'D', note:'"turned at" không phải collocation; "so...but" đảo ngược nghĩa ❌'},
+      ]
+    }
+  },
+
+  // --- Q29-30: NOTICE READING ---
+  {
+    id:29, type:'notice',
+    text: 'Question 29: What does the notice mean? (Xem bảng thông báo VISITOR INFORMATION bên dưới)',
+    options:[
+      'A. You can enter until four o\'clock, but the place closes at five.',
+      'B. You must leave at four o\'clock because the place closes then.',
+      'C. Tickets are sold only after four o\'clock for late visitors.',
+      'D. Entry is free after four o\'clock, but tours stop at five.'
+    ],
+    correct: 0,
+    exp: {
+      trans: 'Câu 29: Thông báo này có nghĩa là gì?\nThông tin: Mở cửa 9:00 SA – 5:00 CH. VÀO CUỐI CÙNG: 4:00 CH.',
+      optTrans: [
+        'A. Bạn có thể vào đến 4 giờ, nhưng nơi này đóng cửa lúc 5 giờ. ✅',
+        'B. Bạn phải rời đi lúc 4 giờ vì nơi này đóng cửa.',
+        'C. Vé chỉ bán sau 4 giờ cho khách đến muộn.',
+        'D. Vào cửa miễn phí sau 4 giờ, nhưng tour dừng lúc 5 giờ.'
+      ],
+      why: '"Open: 9:00 AM – 5:00 PM" = mở cửa đến 5h. "LAST ENTRY: 4:00 PM" = vào cửa lần cuối lúc 4h (nhưng ở trong đến 5h vẫn được). → Đáp án A.',
+      choices: [
+        {label:'A ✅', note:'Đúng: vào cuối cùng lúc 4h, đóng cửa lúc 5h. Hai thông tin khớp hoàn toàn ✔'},
+        {label:'B', note:'Sai: nơi đóng cửa lúc 5h, không phải 4h ❌'},
+        {label:'C', note:'Không có thông tin về việc vé chỉ bán sau 4h ❌'},
+        {label:'D', note:'Không có thông tin về miễn phí hay tour ❌'},
+      ]
+    }
+  },
+  {
+    id:30, type:'notice',
+    text: 'Question 30: What does the message mean? (Xem thông báo Class 11A bên dưới)',
+    options:[
+      'A. The meeting is cancelled because the lab is dirty.',
+      'B. The meeting location has changed, but the time is the same.',
+      'C. The meeting time changes to 3:30 p.m.',
+      'D. Students must clean the lab before attending.'
+    ],
+    correct: 1,
+    exp: {
+      trans: 'Câu 30: Thông báo này có nghĩa là gì?\nThông báo: "Cuộc họp câu lạc bộ khoa học đã chuyển sang Phòng 204 vì phòng thí nghiệm đang được vệ sinh. Giờ bắt đầu vẫn là 3:30 CH."',
+      optTrans: [
+        'A. Cuộc họp bị hủy vì phòng thí nghiệm bẩn.',
+        'B. Địa điểm họp đã thay đổi, nhưng giờ vẫn như cũ. ✅',
+        'C. Giờ họp thay đổi thành 3:30 CH.',
+        'D. Học sinh phải dọn phòng thí nghiệm trước khi tham dự.'
+      ],
+      why: '"Moved to Room 204" = địa điểm thay đổi. "Start time STAYS 3:30 PM" = giờ GIỮ NGUYÊN. → Đáp án B.',
+      choices: [
+        {label:'A', note:'Không bị hủy, chỉ chuyển phòng ❌'},
+        {label:'B ✅', note:'Phòng thay đổi (→ 204) + giờ không đổi (3:30) ✔'},
+        {label:'C', note:'"Start time STAYS 3:30" = giờ GIỮ NGUYÊN, không thay đổi ❌'},
+        {label:'D', note:'Không có thông tin yêu cầu học sinh dọn phòng ❌'},
+      ]
+    }
+  },
+
+  // --- Q31-36: MORE THAN A JOB ---
+  {
+    id:31, type:'reading_passage',
+    text: 'Question 31: Which of the following is NOT mentioned as a reason students choose high-paying jobs?',
+    options:[
+      'A. Their families care strongly about financial stability',
+      'B. Parents hope their children will live more securely',
+      'C. Young people often feel pressure from those hopes',
+      'D. Schools require students to follow fixed job paths'
+    ],
+    correct: 3,
+    exp: {
+      trans: 'Câu 31: Điều nào sau đây KHÔNG được đề cập là lý do học sinh chọn công việc lương cao?',
+      optTrans: [
+        'A. Gia đình họ quan tâm mạnh mẽ đến sự ổn định tài chính.',
+        'B. Cha mẹ hy vọng con cái sẽ sống an toàn hơn.',
+        'C. Giới trẻ thường cảm thấy áp lực từ những hy vọng đó.',
+        'D. Trường học yêu cầu học sinh theo con đường nghề nghiệp cố định.'
+      ],
+      why: 'A, B, C đều có trong đoạn 1: "families care about deeply" (A), "want a more stable life for children" (B), "young people feel that pressure" (C). D KHÔNG được nhắc đến trong bài. → Đáp án D.',
+      choices: [
+        {label:'A', note:'Có trong bài: "having enough money is something families care about deeply" ❌ (đã đề cập)'},
+        {label:'B', note:'Có trong bài: "Parents...want a more stable life for their children" ❌ (đã đề cập)'},
+        {label:'C', note:'Có trong bài: "young people feel that pressure every day" ❌ (đã đề cập)'},
+        {label:'D ✅', note:'KHÔNG CÓ trong bài. Bài không đề cập trường học yêu cầu theo ngành cố định ✔'},
+      ]
+    }
+  },
+  {
+    id:32, type:'reading_passage',
+    text: 'Question 32: The word "meaningful" in the third paragraph is closest in meaning to __________.',
+    options:['A. difficult','B. significant','C. permanent','D. professional'],
+    correct: 1,
+    exp: {
+      trans: 'Câu 32: Từ "meaningful" (có ý nghĩa) gần nghĩa nhất với từ nào?',
+      optTrans: ['A. difficult – khó khăn','B. significant – có ý nghĩa, quan trọng','C. permanent – vĩnh viễn, lâu dài','D. professional – chuyên nghiệp'],
+      why: '"Meaningful" = có ý nghĩa, đáng kể, quan trọng. "Significant" = quan trọng, có ý nghĩa → gần nghĩa nhất. → Đáp án B.',
+      choices: [
+        {label:'A. difficult', note:'"meaningful" ≠ "difficult" ❌'},
+        {label:'B. significant ✅', note:'"meaningful" ≈ "significant" = có ý nghĩa, quan trọng ✔'},
+        {label:'C. permanent', note:'"permanent" = vĩnh viễn → không đồng nghĩa ❌'},
+        {label:'D. professional', note:'"professional" = chuyên nghiệp → không đồng nghĩa ❌'},
+      ]
+    }
+  },
+  {
+    id:33, type:'reading_passage',
+    text: 'Question 33: The word "stable" in the first paragraph is OPPOSITE in meaning to __________.',
+    options:['A. healthy','B. uncertain','C. difficult','D. expensive'],
+    correct: 1,
+    exp: {
+      trans: 'Câu 33: Từ "stable" (ổn định) trong đoạn 1 TRÁI NGHĨA với từ nào?',
+      optTrans: ['A. healthy – khỏe mạnh','B. uncertain – không chắc chắn, bất ổn','C. difficult – khó khăn','D. expensive – đắt đỏ'],
+      why: '"Stable" = ổn định. Trái nghĩa: "unstable" = bất ổn. "Uncertain" = không chắc chắn, bất ổn → gần nghĩa nhất với trái nghĩa của "stable". → Đáp án B.',
+      choices: [
+        {label:'A. healthy', note:'"healthy" ≠ trái nghĩa của "stable" ❌'},
+        {label:'B. uncertain ✅', note:'"stable" (ổn định) ↔ "uncertain" (bất ổn, không chắc chắn) ✔'},
+        {label:'C. difficult', note:'"difficult" = khó → không phải trái nghĩa của "stable" ❌'},
+        {label:'D. expensive', note:'"expensive" = đắt → không phải trái nghĩa của "stable" ❌'},
+      ]
+    }
+  },
+  {
+    id:34, type:'reading_passage',
+    text: 'Question 34: According to the second paragraph, why is prioritizing money for career choices risky?',
+    options:[
+      'A. Because employers no longer value technical knowledge in any professions.',
+      'B. Because students who love art often fail to find any stable employment.',
+      'C. Because future job market demands may shift due to technological advancement.',
+      'D. Because artificial intelligence will eventually eliminate all high-paying jobs.'
+    ],
+    correct: 2,
+    exp: {
+      trans: 'Câu 34: Theo đoạn 2, tại sao ưu tiên tiền bạc khi chọn nghề nghiệp lại rủi ro?',
+      optTrans: [
+        'A. Vì nhà tuyển dụng không còn coi trọng kiến thức kỹ thuật.',
+        'B. Vì học sinh thích nghệ thuật thường không tìm được việc ổn định.',
+        'C. Vì nhu cầu thị trường lao động trong tương lai có thể thay đổi do tiến bộ công nghệ.',
+        'D. Vì AI sẽ xóa bỏ tất cả công việc lương cao.'
+      ],
+      why: 'Đoạn 2 viết: "Many jobs that seem secure today may look very different in ten or fifteen years" → vì công nghệ (AI) thay đổi thị trường lao động. → Đáp án C.',
+      choices: [
+        {label:'A', note:'Sai: bài nói nhà tuyển dụng vẫn muốn kỹ thuật nhưng cũng cần kỹ năng mềm ❌'},
+        {label:'B', note:'Sai: bài không nói học sinh yêu nghệ thuật "fail" ❌'},
+        {label:'C ✅', note:'Đúng: "computers and AI are starting to do many everyday jobs" → công việc thay đổi ✔'},
+        {label:'D', note:'Sai: bài không nói AI "eliminate ALL high-paying jobs" ❌'},
+      ]
+    }
+  },
+  {
+    id:35, type:'reading_passage',
+    text: 'Question 35: What can be inferred about students who enjoy art, music, or community work?',
+    options:[
+      'A. They may have strengths that employers will increasingly value',
+      'B. They are less affected by family pressure about future income',
+      'C. They should avoid practical careers and follow passion alone',
+      'D. They will find it easier to earn more than IT workers'
+    ],
+    correct: 0,
+    exp: {
+      trans: 'Câu 35: Điều gì có thể SUY LUẬN về học sinh yêu thích nghệ thuật, âm nhạc hoặc công việc cộng đồng?',
+      optTrans: [
+        'A. Họ có thể có thế mạnh mà nhà tuyển dụng ngày càng đánh giá cao.',
+        'B. Họ ít bị ảnh hưởng bởi áp lực gia đình về thu nhập.',
+        'C. Họ nên tránh các nghề thực tế và chỉ theo đam mê.',
+        'D. Họ sẽ dễ kiếm tiền hơn nhân viên IT.'
+      ],
+      why: 'Bài viết: "What employers want more and more is...creative thinking, good communication...A student who loves art, music, or community work may have more to offer than they think." → Suy luận: những kỹ năng này ngày càng được coi trọng. → Đáp án A.',
+      choices: [
+        {label:'A ✅', note:'Đúng: bài ngụ ý kỹ năng sáng tạo, giao tiếp ngày càng được nhà tuyển dụng coi trọng ✔'},
+        {label:'B', note:'Không có thông tin này trong bài ❌'},
+        {label:'C', note:'Bài nói ngược lại: "This does not mean young people should ignore practical needs" ❌'},
+        {label:'D', note:'Không có so sánh nào với IT workers trong bài ❌'},
+      ]
+    }
+  },
+  {
+    id:36, type:'reading_passage',
+    text: 'Question 36: Which of the following best summarises the main content of the passage?',
+    options:[
+      'A. The challenges of finding a high-paying job in the current Vietnamese market.',
+      'B. The importance of aligning professional choices with personal meaning and skills.',
+      'C. Why students should avoid careers that are likely to be affected by automation.',
+      'D. The significant role of parents in shaping the career paths of their children.'
+    ],
+    correct: 1,
+    exp: {
+      trans: 'Câu 36: Đâu là tóm tắt tốt nhất nội dung chính của đoạn văn?',
+      optTrans: [
+        'A. Những thách thức khi tìm việc lương cao tại thị trường Việt Nam.',
+        'B. Tầm quan trọng của việc chọn nghề phù hợp với ý nghĩa cá nhân và kỹ năng.',
+        'C. Tại sao học sinh nên tránh các nghề bị ảnh hưởng bởi tự động hóa.',
+        'D. Vai trò quan trọng của cha mẹ trong việc định hướng nghề nghiệp.'
+      ],
+      why: 'Bài viết bao gồm 3 phần: (1) học sinh chọn nghề vì tiền, (2) rủi ro của việc chỉ chọn vì tiền, (3) tìm công việc có ý nghĩa phù hợp kỹ năng → tóm tắt chính xác nhất là B. → Đáp án B.',
+      choices: [
+        {label:'A', note:'Bài không tập trung vào "challenges of finding high-paying job" ❌'},
+        {label:'B ✅', note:'Bao quát đúng tinh thần bài: chọn nghề cần căn chỉnh với ý nghĩa + kỹ năng ✔'},
+        {label:'C', note:'Bài không khuyên "tránh" các nghề bị ảnh hưởng bởi tự động hóa ❌'},
+        {label:'D', note:'Vai trò cha mẹ chỉ được đề cập ngắn trong đoạn 1 ❌'},
+      ]
+    }
+  },
+
+  // --- Q37-40: OUR HERITAGE ---
+  {
+    id:37, type:'reading_fill2',
+    text: 'Question 37: Teenagers can learn new skills, discover different cultures, (37) __________.',
+    options:[
+      'A. create a world that is richer, warmer, and more meaningful',
+      'B. and share their ideas more easily than before',
+      'C. have kept special ways of living for generations',
+      'D. where everything looks the same'
+    ],
+    correct: 1,
+    exp: {
+      trans: 'Câu 37: Thanh thiếu niên có thể học kỹ năng mới, khám phá các nền văn hóa khác nhau, (37)__________.',
+      optTrans: [
+        'A. tạo ra một thế giới phong phú hơn, ấm áp hơn và có ý nghĩa hơn',
+        'B. và chia sẻ ý tưởng của họ dễ dàng hơn trước',
+        'C. đã giữ gìn những cách sống đặc biệt qua nhiều thế hệ',
+        'D. nơi mọi thứ trông giống nhau'
+      ],
+      why: 'Câu liệt kê các lợi ích cho thanh thiếu niên: "learn skills, discover cultures, and share ideas more easily" → cấu trúc liệt kê song song. "And share their ideas more easily than before" hoàn thành danh sách. → Đáp án B.',
+      choices: [
+        {label:'A', note:'Đây là kết luận của toàn bài (câu 40), không phải điền vào đây ❌'},
+        {label:'B ✅', note:'"and share their ideas more easily than before" → tiếp tục danh sách song song ✔'},
+        {label:'C', note:'Đây là mô tả về dân tộc thiểu số (câu 38) ❌'},
+        {label:'D', note:'Đây là mô tả về tương lai tiêu cực (câu 39) ❌'},
+      ]
+    }
+  },
+  {
+    id:38, type:'reading_fill2',
+    text: 'Question 38: Ethnic groups in different regions (38) __________.',
+    options:[
+      'A. create a world that is richer, warmer, and more meaningful',
+      'B. and share their ideas more easily than before',
+      'C. have kept special ways of living for generations',
+      'D. where everything looks the same'
+    ],
+    correct: 2,
+    exp: {
+      trans: 'Câu 38: Các dân tộc thiểu số ở các vùng khác nhau (38)__________.',
+      optTrans: [
+        'A. tạo ra một thế giới phong phú hơn',
+        'B. và chia sẻ ý tưởng dễ dàng hơn',
+        'C. đã giữ gìn những cách sống đặc biệt qua nhiều thế hệ',
+        'D. nơi mọi thứ trông giống nhau'
+      ],
+      why: '"Ethnic groups...have kept special ways of living for generations" = các nhóm dân tộc đã giữ gìn lối sống đặc biệt qua nhiều thế hệ → phù hợp với ngữ cảnh nói về truyền thống. → Đáp án C.',
+      choices: [
+        {label:'A', note:'Đây là kết luận của bài (câu 40) ❌'},
+        {label:'B', note:'Câu B dùng cho câu 37 (về thanh thiếu niên) ❌'},
+        {label:'C ✅', note:'"Ethnic groups...have kept special ways of living" → phù hợp với ngữ cảnh truyền thống dân tộc ✔'},
+        {label:'D', note:'Câu D dùng cho câu 39 ❌'},
+      ]
+    }
+  },
+  {
+    id:39, type:'reading_fill2',
+    text: 'Question 39: The future should not be a place (39) __________.',
+    options:[
+      'A. create a world that is richer, warmer, and more meaningful',
+      'B. and share their ideas more easily than before',
+      'C. have kept special ways of living for generations',
+      'D. where everything looks the same'
+    ],
+    correct: 3,
+    exp: {
+      trans: 'Câu 39: Tương lai không nên là nơi (39)__________.',
+      optTrans: [
+        'A. tạo ra một thế giới phong phú hơn',
+        'B. và chia sẻ ý tưởng dễ dàng hơn',
+        'C. đã giữ gìn những cách sống đặc biệt',
+        'D. nơi mọi thứ trông giống nhau'
+      ],
+      why: '"The future should not be a place WHERE everything looks the same" → mệnh đề quan hệ với "where" chỉ nơi chốn. Ý: tương lai không nên là nơi mọi thứ đều giống nhau (mất đi sự đa dạng văn hóa). → Đáp án D.',
+      choices: [
+        {label:'A', note:'Câu A là kết luận (câu 40) ❌'},
+        {label:'B', note:'Câu B dùng cho câu 37 ❌'},
+        {label:'C', note:'Câu C dùng cho câu 38; "have kept" không phải mệnh đề quan hệ ❌'},
+        {label:'D ✅', note:'"a place WHERE everything looks the same" → mệnh đề quan hệ đúng cú pháp và nghĩa ✔'},
+      ]
+    }
+  },
+  {
+    id:40, type:'reading_fill2',
+    text: 'Question 40: When young people care about both innovation and tradition, they help (40) __________.',
+    options:[
+      'A. create a world that is richer, warmer, and more meaningful',
+      'B. and share their ideas more easily than before',
+      'C. have kept special ways of living for generations',
+      'D. where everything looks the same'
+    ],
+    correct: 0,
+    exp: {
+      trans: 'Câu 40: Khi giới trẻ quan tâm đến cả đổi mới lẫn truyền thống, họ giúp (40)__________.',
+      optTrans: [
+        'A. tạo ra một thế giới phong phú hơn, ấm áp hơn và có ý nghĩa hơn',
+        'B. và chia sẻ ý tưởng của họ dễ dàng hơn',
+        'C. đã giữ gìn những cách sống đặc biệt',
+        'D. nơi mọi thứ trông giống nhau'
+      ],
+      why: '"They help create a world that is richer, warmer, and more meaningful" → kết luận tích cực, hoàn thiện thông điệp bài. "Help + V" = giúp làm gì. → Đáp án A.',
+      choices: [
+        {label:'A ✅', note:'"help create a world..." → kết luận đẹp, đúng cú pháp "help + bare V" ✔'},
+        {label:'B', note:'Câu B đã dùng cho câu 37; "and share" không nối câu sau "help" ❌'},
+        {label:'C', note:'Câu C đã dùng cho câu 38; "have kept" không đúng cú pháp ❌'},
+        {label:'D', note:'Câu D đã dùng cho câu 39; tương lai tiêu cực, không phù hợp kết luận ❌'},
+      ]
+    }
+  }
+];
+
+// ===== SHUFFLE ARRAY =====
+function shuffle(arr) {
+  for (let i=arr.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+// ===== BUILD QUIZ =====
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+
+  // Sections
+  const sections = [
+    { title: 'PHẦN 1: PHÁT ÂM', desc: 'Questions 1–2 · Pronunciation', ids:[1,2] },
+    { title: 'PHẦN 2: TRỌNG ÂM', desc: 'Questions 3–4 · Word Stress', ids:[3,4] },
+    { title: 'PHẦN 3: NGỮ PHÁP & TỪ VỰNG', desc: 'Questions 5–12 · Grammar & Vocabulary', ids:[5,6,7,8,9,10,11,12] },
+    { title: 'PHẦN 4: ĐỌC THÔNG BÁO (ĐIỀN VÀO CHỖ TRỐNG)', desc: 'Questions 13–16 · Leadership Workshop Announcement', ids:[13,14,15,16], announcement: true },
+    { title: 'PHẦN 5: SẮP XẾP VĂN BẢN', desc: 'Questions 17–18 · Text Arrangement', ids:[17,18] },
+    { title: 'PHẦN 6: ĐỌC HIỂU – ĐIỀN VÀO CHỖ TRỐNG', desc: 'Questions 19–24 · The Power of Collaboration', ids:[19,20,21,22,23,24], passage: 'collaboration' },
+    { title: 'PHẦN 7: CHỌN CÂU CÓ NGHĨA GẦN NHẤT', desc: 'Questions 25–26 · Sentence Meaning', ids:[25,26] },
+    { title: 'PHẦN 8: VIẾT LẠI CÂU', desc: 'Questions 27–28 · Sentence Building', ids:[27,28] },
+    { title: 'PHẦN 9: ĐỌC THÔNG BÁO / TIN NHẮN', desc: 'Questions 29–30 · Notice & Message Reading', ids:[29,30], notices: true },
+    { title: 'PHẦN 10: ĐỌC HIỂU – "MORE THAN A JOB"', desc: 'Questions 31–36 · Reading Passage', ids:[31,32,33,34,35,36], passage: 'job' },
+    { title: 'PHẦN 11: ĐỌC HIỂU – "OUR HERITAGE IN A CHANGING WORLD"', desc: 'Questions 37–40 · Reading Passage (Gap Fill)', ids:[37,38,39,40], passage: 'heritage' },
+  ];
+
+  sections.forEach(sec => {
+    const sh = document.createElement('div');
+    sh.className = 'section-header';
+    sh.innerHTML = `<div><h2>${sec.title}</h2><p>${sec.desc}</p></div>`;
+    container.appendChild(sh);
+
+    // Special blocks
+    if (sec.announcement) {
+      container.appendChild(buildAnnouncementBlock());
+    }
+    if (sec.notices) {
+      container.appendChild(buildNoticesBlock());
+    }
+    if (sec.passage === 'collaboration') {
+      container.appendChild(buildCollaborationPassage());
+    }
+    if (sec.passage === 'job') {
+      container.appendChild(buildJobPassage());
+    }
+    if (sec.passage === 'heritage') {
+      container.appendChild(buildHeritagePassage());
+    }
+
+    sec.ids.forEach(id => {
+      const q = questions.find(x => x.id === id);
+      container.appendChild(buildQCard(q));
+    });
+  });
+}
+
+function buildAnnouncementBlock() {
+  const div = document.createElement('div');
+  div.className = 'ann-box';
+  div.innerHTML = `
+    <div class="ann-title">LEADERSHIP IN ACTION: 3-DAY YOUTH WORKSHOP</div>
+    <div class="ann-sub">THÔNG BÁO HỘI THẢO</div>
+    <p>Last July, a shy Grade 10 student walked in saying, "I'm not the leader type." Three days later, she was guiding a group <span class="inline-blank">(13)___</span> and pitching a plan with a steady voice. This workshop is built around real-life situations: teamwork under pressure, handling disagreements, and speaking with purpose.</p><br>
+    <p>Each day includes short coaching sessions on planning and communication, plus guided reflection to help you notice your own progress. You'll also learn how to build public <span class="inline-blank">(14)___</span> skills that makes your ideas sound clear, calm, and convincing.</p><br>
+    <p>To make the most of the program, come ready to try, fail safely, and try again.</p><br>
+    <p><strong>Time:</strong> 8:30 AM–4:30 PM, July 10–12</p>
+    <p><strong>Venue:</strong> Youth Activity Center, at 45 Le Loi Street</p><br>
+    <p>Please apply <span class="inline-blank">(15)___</span> the workshop by July 5. We can accept only a limited <span class="inline-blank">(16)___</span> of participants this round, so don't wait too long.</p>
+  `;
+  return div;
+}
+
+function buildNoticesBlock() {
+  const div = document.createElement('div');
+  div.className = 'notice-wrap';
+  div.innerHTML = `
+    <div class="notice-visitor">
+      <div class="nv-title">VISITOR INFORMATION</div>
+      <div class="nv-hours">Open: 9:00 a.m. – 5:00 p.m.</div>
+      <div class="nv-last">LAST ENTRY: 4:00 p.m.</div>
+      <div class="nv-info">Ticket desk: near the main door<br>Keep your ticket during your visit</div>
+      <div class="nv-icons">🕐 🎫 ✏️</div>
+      <div style="font-size:11px;color:#666;margin-top:8px;font-style:italic">Q29 – Visitor Notice</div>
+    </div>
+    <div class="notice-class">
+      <div class="nc-title">Class 11A</div>
+      <div class="nc-body">The science club meeting has moved to Room 204 because the lab is being cleaned.</div>
+      <div class="nc-time">Start time stays 3:30 p.m.</div>
+      <div style="font-size:11px;color:#888;margin-top:10px;font-style:italic">Q30 – Class Message</div>
+    </div>
+  `;
+  return div;
+}
+
+function buildCollaborationPassage() {
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div class="glossary-box">
+      <strong>📖 Glossary (từ cơ bản)</strong>
+      <ul>
+        <li>collaboration = hợp tác</li>
+        <li>perspective = góc nhìn</li>
+        <li>attain = đạt được</li>
+        <li>innovative = sáng tạo</li>
+        <li>mutual = lẫn nhau</li>
+      </ul>
+    </div>
+    <div class="passage-box">
+      <h3>📄 The Power of Collaboration – Đoạn văn điền từ (Q19–24)</h3>
+      <div class="eng-passage">
+        <p>In any successful organization, the ability to <strong>(19)___</strong> a team is essential. Teamwork is not just about completing tasks; it is about combining different perspectives to attain a common goal. <strong>(20)___</strong> people cooperate, they can generate innovative ideas that might not be possible for an individual working alone.</p><br>
+        <p>Effective communication always <strong>(21)___</strong> a vital part in this process. Members <strong>(22)___</strong> to share their opinions openly and listen to others' suggestions. Consequently, a team that communicates well can solve problems <strong>(23)___</strong>. However, there are some individuals who feel their ideas are ignored in group discussions. This can lead to frustration if the team leader doesn't manage the conversation properly.</p><br>
+        <p>For the projects <strong>(24)___</strong>, success depends on trust and mutual respect. By supporting one another, team members can overcome any challenge and create a positive working environment.</p>
+      </div>
+      <div class="vocab-table-wrap">
+        <table class="vocab-table">
+          <thead><tr><th>Từ</th><th>Loại từ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td>collaboration</td><td>n.</td><td>sự hợp tác</td><td>Teamwork requires collaboration.</td></tr>
+            <tr><td>essential</td><td>adj.</td><td>cần thiết, thiết yếu</td><td>Water is essential for life.</td></tr>
+            <tr><td>perspective</td><td>n.</td><td>quan điểm, góc nhìn</td><td>Different perspectives help us grow.</td></tr>
+            <tr><td>attain</td><td>v.</td><td>đạt được (mục tiêu)</td><td>She attained her dream job.</td></tr>
+            <tr><td>cooperate</td><td>v.</td><td>hợp tác, cùng làm việc</td><td>Students cooperate in group projects.</td></tr>
+            <tr><td>innovative</td><td>adj.</td><td>mang tính sáng tạo đổi mới</td><td>Apple is known for innovative design.</td></tr>
+            <tr><td>vital</td><td>adj.</td><td>quan trọng sống còn</td><td>Communication plays a vital role.</td></tr>
+            <tr><td>frustration</td><td>n.</td><td>sự thất vọng, bực bội</td><td>He felt frustration when ignored.</td></tr>
+            <tr><td>mutual</td><td>adj.</td><td>lẫn nhau</td><td>Mutual respect builds good teams.</td></tr>
+            <tr><td>overcome</td><td>v.</td><td>vượt qua (khó khăn)</td><td>We can overcome any challenge.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="trans-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.textContent.includes('Hiện')?'🙈 Ẩn bản dịch':'🌐 Bản dịch đầy đủ'">🌐 Bản dịch đầy đủ</button>
+      <div class="trans-content">
+        <strong>Sức mạnh của sự hợp tác</strong><br><br>
+        Trong bất kỳ tổ chức thành công nào, khả năng làm việc cùng nhau như một đội là điều cần thiết. Làm việc nhóm không chỉ là hoàn thành nhiệm vụ; mà là kết hợp các góc nhìn khác nhau để đạt được mục tiêu chung. Khi mọi người hợp tác, họ có thể tạo ra những ý tưởng sáng tạo mà một cá nhân làm việc một mình không thể thực hiện được.<br><br>
+        Giao tiếp hiệu quả luôn đóng một vai trò quan trọng trong quá trình này. Các thành viên nên chia sẻ ý kiến một cách cởi mở và lắng nghe gợi ý của người khác. Do đó, một đội giao tiếp tốt có thể giải quyết vấn đề dễ dàng và nhanh hơn. Tuy nhiên, có một số cá nhân cảm thấy ý tưởng của họ bị bỏ qua trong các cuộc thảo luận nhóm. Điều này có thể dẫn đến sự thất vọng nếu trưởng nhóm không quản lý cuộc trò chuyện đúng cách.<br><br>
+        Đối với những dự án mà chúng tôi làm, sự thành công phụ thuộc vào niềm tin và sự tôn trọng lẫn nhau. Bằng cách hỗ trợ lẫn nhau, các thành viên trong nhóm có thể vượt qua mọi thách thức và tạo ra môi trường làm việc tích cực.
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function buildJobPassage() {
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div class="glossary-box">
+      <strong>📖 Glossary (từ cơ bản)</strong>
+      <ul>
+        <li>survey = khảo sát</li>
+        <li>stable = ổn định</li>
+        <li>artificial intelligence = trí tuệ nhân tạo</li>
+        <li>meaningful = có ý nghĩa</li>
+        <li>consistently = nhất quán, liên tục</li>
+      </ul>
+    </div>
+    <div class="passage-box">
+      <div class="passage-title">More Than a Job</div>
+      <div class="eng-passage">
+        <p>A recent survey of over 2,000 Vietnamese middle school students showed that nearly 60% chose their dream job based on salary. Doctors, engineers, and IT workers topped the list. These are not surprising choices. Vietnam has changed a lot in the last thirty years, and having enough money is something families care about deeply. Parents who grew up without much naturally want a more stable life for their children, and young people feel that pressure every day.</p><br>
+        <p>However, career counselors and school teachers are now asking a different question. In a world where computers and artificial intelligence are starting to do many everyday jobs, is choosing a career only for money still a secure plan? Many jobs that seem secure today may look very different in ten or fifteen years. What employers want more and more is not just technical knowledge, but creative thinking, good communication, and the ability to work well with others. A student who loves art, music, or community work may have more to offer than they think.</p><br>
+        <p>This does not mean young people should ignore practical needs. Rent, food, and family responsibilities are real. But studies consistently show that people who find their work meaningful tend to perform better, stay healthier, and feel more satisfied. The best career is rarely just the highest-paying one. It is the one where a person's skills, values, and daily effort all point in the same direction.</p>
+      </div>
+      <div class="vocab-table-wrap">
+        <table class="vocab-table">
+          <thead><tr><th>Từ</th><th>Loại từ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td>survey</td><td>n.</td><td>cuộc khảo sát</td><td>A recent survey shows interesting results.</td></tr>
+            <tr><td>stable</td><td>adj.</td><td>ổn định</td><td>A stable job gives financial security.</td></tr>
+            <tr><td>counselor</td><td>n.</td><td>cố vấn, tư vấn viên</td><td>School counselors help with career choices.</td></tr>
+            <tr><td>artificial intelligence</td><td>n.</td><td>trí tuệ nhân tạo</td><td>AI is transforming the job market.</td></tr>
+            <tr><td>secure</td><td>adj.</td><td>an toàn, chắc chắn</td><td>Many jobs seem secure now but may change.</td></tr>
+            <tr><td>creative thinking</td><td>n.</td><td>tư duy sáng tạo</td><td>Employers value creative thinking highly.</td></tr>
+            <tr><td>meaningful</td><td>adj.</td><td>có ý nghĩa, đáng giá</td><td>Finding meaningful work takes time.</td></tr>
+            <tr><td>consistently</td><td>adv.</td><td>nhất quán, liên tục</td><td>Studies consistently show this trend.</td></tr>
+            <tr><td>satisfied</td><td>adj.</td><td>thỏa mãn, hài lòng</td><td>She felt satisfied with her career choice.</td></tr>
+            <tr><td>practical</td><td>adj.</td><td>thực tế</td><td>Rent and food are practical needs.</td></tr>
+            <tr><td>ignore</td><td>v.</td><td>bỏ qua, phớt lờ</td><td>Don't ignore practical needs.</td></tr>
+            <tr><td>mutual</td><td>adj.</td><td>lẫn nhau</td><td>They showed mutual respect.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="trans-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.textContent.includes('Hiện')?'🙈 Ẩn bản dịch':'🌐 Bản dịch đầy đủ'">🌐 Bản dịch đầy đủ</button>
+      <div class="trans-content">
+        <strong>Hơn Là Một Công Việc</strong><br><br>
+        Một cuộc khảo sát gần đây với hơn 2.000 học sinh THCS Việt Nam cho thấy gần 60% chọn nghề mơ ước dựa trên mức lương. Bác sĩ, kỹ sư và nhân viên IT đứng đầu danh sách. Đây không phải là những lựa chọn đáng ngạc nhiên. Việt Nam đã thay đổi rất nhiều trong 30 năm qua, và việc có đủ tiền là điều các gia đình quan tâm sâu sắc. Những bậc phụ huynh lớn lên trong khó khăn tự nhiên mong muốn một cuộc sống ổn định hơn cho con cái, và giới trẻ cảm nhận áp lực đó mỗi ngày.<br><br>
+        Tuy nhiên, các cố vấn nghề nghiệp và giáo viên tư vấn học đường hiện đang đặt ra một câu hỏi khác. Trong thế giới mà máy tính và trí tuệ nhân tạo bắt đầu đảm nhận nhiều công việc hàng ngày, liệu chỉ chọn nghề vì tiền có còn là kế hoạch an toàn? Nhiều công việc có vẻ ổn định ngày hôm nay có thể trông rất khác trong 10 hoặc 15 năm nữa. Điều nhà tuyển dụng ngày càng muốn không chỉ là kiến thức kỹ thuật, mà là tư duy sáng tạo, giao tiếp tốt và khả năng làm việc hiệu quả với người khác. Học sinh yêu nghệ thuật, âm nhạc hoặc công việc cộng đồng có thể có nhiều điều để cống hiến hơn họ nghĩ.<br><br>
+        Điều này không có nghĩa là giới trẻ nên bỏ qua nhu cầu thực tế. Tiền thuê nhà, thức ăn và trách nhiệm gia đình là thật. Nhưng các nghiên cứu luôn cho thấy những người tìm thấy ý nghĩa trong công việc có xu hướng làm tốt hơn, khỏe mạnh hơn và cảm thấy hài lòng hơn. Nghề nghiệp tốt nhất hiếm khi chỉ là nghề lương cao nhất. Đó là nghề mà kỹ năng, giá trị và nỗ lực hàng ngày của một người đều hướng về cùng một hướng.
+      </div>
+      <br>
+      <p style="font-size:13px;color:var(--muted)"><strong style="color:var(--gold)">📍 Đoạn liên quan Q31:</strong> "Vietnam has changed...families care about deeply. Parents who grew up without much naturally want a more stable life...young people feel that pressure every day."</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px"><strong style="color:var(--gold)">📍 Đoạn liên quan Q34:</strong> "computers and artificial intelligence are starting to do many everyday jobs...Many jobs that seem secure today may look very different in ten or fifteen years."</p>
+    </div>
+  `;
+  return div;
+}
+
+function buildHeritagePassage() {
+  const div = document.createElement('div');
+  div.innerHTML = `
+    <div class="glossary-box">
+      <strong>📖 Glossary (từ cơ bản)</strong>
+      <ul>
+        <li>heritage = di sản</li>
+        <li>innovation = sự đổi mới</li>
+        <li>tradition = truyền thống</li>
+        <li>ethnic group = dân tộc thiểu số</li>
+        <li>generation = thế hệ</li>
+      </ul>
+    </div>
+    <div class="passage-box">
+      <div class="passage-title">Our Heritage in a Changing World</div>
+      <div class="eng-passage">
+        <p>Many young people today are interested in modern lifestyles, online shopping, and future careers. They want to live in smart cities, use new technology, and communicate quickly with people around the world. These changes bring many exciting chances. Teenagers can learn new skills, discover different cultures, <strong>(37)___</strong>. At the same time, fast change also raises an important question: how can we move forward without losing the value of our heritage?</p><br>
+        <p>In Vietnam, each local community has its own traditions, stories, and customs. Ethnic groups in different regions <strong>(38)___</strong>. Their clothes, festivals, music, and daily habits are not only beautiful parts of the past, but also living lessons for the present. In a busy modern world, these things remind us where we come from and what truly matters.</p><br>
+        <p>The future should not be a place <strong>(39)___</strong>. It should be a place where technology supports people, and where development still respects culture, nature, and human connection. When young people care about both innovation and tradition, they do more than protect old values. They help <strong>(40)___</strong>.</p>
+      </div>
+      <div class="vocab-table-wrap">
+        <table class="vocab-table">
+          <thead><tr><th>Từ</th><th>Loại từ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td>heritage</td><td>n.</td><td>di sản văn hóa</td><td>Vietnam has rich cultural heritage.</td></tr>
+            <tr><td>ethnic group</td><td>n.</td><td>dân tộc thiểu số</td><td>Many ethnic groups live in the mountains.</td></tr>
+            <tr><td>innovation</td><td>n.</td><td>sự đổi mới, sáng tạo</td><td>Technology drives innovation.</td></tr>
+            <tr><td>tradition</td><td>n.</td><td>truyền thống</td><td>We should preserve old traditions.</td></tr>
+            <tr><td>generation</td><td>n.</td><td>thế hệ</td><td>This story passed down for generations.</td></tr>
+            <tr><td>custom</td><td>n.</td><td>phong tục, tập quán</td><td>Local customs vary by region.</td></tr>
+            <tr><td>preserve</td><td>v.</td><td>bảo tồn, giữ gìn</td><td>We must preserve our cultural identity.</td></tr>
+            <tr><td>respect</td><td>v./n.</td><td>tôn trọng</td><td>Development should respect culture.</td></tr>
+            <tr><td>meaningful</td><td>adj.</td><td>có ý nghĩa</td><td>Traditions make life more meaningful.</td></tr>
+            <tr><td>diverse</td><td>adj.</td><td>đa dạng</td><td>Vietnam has a diverse cultural landscape.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="trans-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block';this.textContent=this.textContent.includes('Hiện')?'🙈 Ẩn bản dịch':'🌐 Bản dịch đầy đủ'">🌐 Bản dịch đầy đủ</button>
+      <div class="trans-content">
+        <strong>Di Sản Của Chúng Ta Trong Một Thế Giới Đang Thay Đổi</strong><br><br>
+        Nhiều người trẻ ngày nay quan tâm đến lối sống hiện đại, mua sắm trực tuyến và nghề nghiệp tương lai. Họ muốn sống ở các thành phố thông minh, sử dụng công nghệ mới và giao tiếp nhanh chóng với mọi người trên thế giới. Những thay đổi này mang lại nhiều cơ hội thú vị. Thanh thiếu niên có thể học kỹ năng mới, khám phá các nền văn hóa khác nhau, <strong>(37) và chia sẻ ý tưởng của họ dễ dàng hơn trước</strong>. Đồng thời, sự thay đổi nhanh chóng cũng đặt ra một câu hỏi quan trọng: làm thế nào để chúng ta tiến về phía trước mà không mất đi giá trị di sản?<br><br>
+        Ở Việt Nam, mỗi cộng đồng địa phương có truyền thống, câu chuyện và phong tục riêng. Các dân tộc thiểu số ở các vùng khác nhau <strong>(38) đã giữ gìn những cách sống đặc biệt qua nhiều thế hệ</strong>. Trang phục, lễ hội, âm nhạc và thói quen hàng ngày của họ không chỉ là những phần đẹp của quá khứ, mà còn là những bài học sống cho hiện tại.<br><br>
+        Tương lai không nên là nơi <strong>(39) mọi thứ trông giống nhau</strong>. Nó nên là nơi mà công nghệ hỗ trợ con người, và sự phát triển vẫn tôn trọng văn hóa, thiên nhiên và kết nối con người. Khi giới trẻ quan tâm đến cả đổi mới lẫn truyền thống, họ không chỉ bảo vệ các giá trị cũ. Họ giúp <strong>(40) tạo ra một thế giới phong phú hơn, ấm áp hơn và có ý nghĩa hơn</strong>.
+      </div>
+    </div>
+  `;
+  return div;
+}
+
+function buildQCard(q) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `q-${q.id}`;
+
+  // Shuffle options
+  const indices = [0,1,2,3];
+  const shuffled = shuffle([...indices]);
+  const correctShuffledIdx = shuffled.indexOf(q.correct);
+
+  const labels = ['A','B','C','D'];
+
+  let optHTML = '';
+  shuffled.forEach((origIdx, newIdx) => {
+    optHTML += `<button class="opt-btn" onclick="selectOpt(${q.id}, ${newIdx}, ${correctShuffledIdx})" id="q${q.id}-opt${newIdx}">
+      <span class="opt-label">${labels[newIdx]}</span>
+      <span>${q.options[origIdx].replace(/^[A-D]\.\s*/,'')}</span>
+    </button>`;
+  });
+
+  // Build explanation
+  const exp = q.exp;
+  let choicesHTML = '';
+  if (exp.choices) {
+    exp.choices.forEach((c,i) => {
+      // Find the shuffled position for this choice
+      choicesHTML += `<div class="exp-row"><strong>${c.label}:</strong> ${c.note}</div>`;
+    });
+  }
+
+  let optTransHTML = '';
+  if (exp.optTrans) {
+    exp.optTrans.forEach((t,i) => {
+      optTransHTML += `<div class="exp-row">• ${t}</div>`;
+    });
+  }
+
+  card.innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:12px;">
+      <div class="q-num">${q.id}</div>
+      <div style="flex:1">
+        <div class="q-text">${q.text}</div>
+        <div class="options-grid">${optHTML}</div>
+        <div class="explanation" id="exp-${q.id}">
+          <div class="exp-header">📖 GIẢI THÍCH</div>
+          <div class="exp-row"><strong style="color:var(--neon2)">📝 Dịch câu:</strong> ${exp.trans}</div>
+          ${optTransHTML ? `<div class="exp-row" style="margin-top:8px"><strong style="color:var(--neon2)">🔤 Dịch đáp án:</strong></div>${optTransHTML}` : ''}
+          <div class="exp-row" style="margin-top:8px"><strong style="color:var(--neon2)">✅ Tại sao đúng:</strong> ${exp.why}</div>
+          ${choicesHTML ? `<div class="exp-row" style="margin-top:8px"><strong style="color:var(--neon2)">🔍 Phân tích từng đáp án:</strong></div>${choicesHTML}` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+
+  return card;
+}
+
+function selectOpt(qId, selectedIdx, correctIdx) {
+  if (answered[qId] !== undefined) return; // Already answered
+
+  const card = document.getElementById(`q-${qId}`);
+  const exp = document.getElementById(`exp-${qId}`);
+  const labels = ['A','B','C','D'];
+  const isCorrect = selectedIdx === correctIdx;
+
+  answered[qId] = isCorrect;
+
+  // Disable all options
+  for (let i=0;i<4;i++) {
+    const btn = document.getElementById(`q${qId}-opt${i}`);
+    if (btn) btn.disabled = true;
+  }
+
+  // Show correct/wrong
+  const selBtn = document.getElementById(`q${qId}-opt${selectedIdx}`);
+  const corBtn = document.getElementById(`q${qId}-opt${correctIdx}`);
+
+  if (isCorrect) {
+    selBtn.classList.add('selected-correct');
+    card.classList.add('correct');
+    rightCount++;
+    getDing();
+    spawnConfetti();
+  } else {
+    selBtn.classList.add('selected-wrong');
+    corBtn.classList.add('show-correct');
+    card.classList.add('wrong');
+    wrongCount++;
+    playWrongVoice();
+    card.style.animation = 'shake 0.4s ease';
+    setTimeout(() => card.style.animation = '', 400);
+  }
+
+  // Show explanation
+  exp.classList.add('show');
+  exp.className = `explanation show ${isCorrect ? 'exp-correct' : 'exp-wrong'}`;
+
+  updateScore();
+}
+
+function submitExam() {
+  const total = 40;
+  const done = Object.keys(answered).length;
+  const right = rightCount;
+  const score = (right / total * 10).toFixed(1);
+
+  document.getElementById('score-num').textContent = `${score}/10`;
+  document.getElementById('score-details').textContent = `Đúng: ${right} / Sai: ${wrongCount} / Chưa làm: ${total - done}`;
+
+  const modal = document.getElementById('score-modal');
+  const numEl = document.getElementById('score-num');
+  const emoji = document.getElementById('score-emoji');
+  const comment = document.getElementById('score-comment');
+
+  if (right >= 36) {
+    numEl.className = 'score-num high';
+    emoji.textContent = '🏆';
+    comment.textContent = 'XUẤT SẮC! Bạn hoàn toàn sẵn sàng chinh phục kỳ thi vào 10 Hà Nội! Tiếp tục phát huy nhé!';
+  } else if (right >= 28) {
+    numEl.className = 'score-num mid';
+    emoji.textContent = '🎯';
+    comment.textContent = 'KHÁ TỐT! Bạn đang trên đà tốt. Ôn lại các phần còn yếu và luyện thêm nhé!';
+  } else if (right >= 20) {
+    numEl.className = 'score-num mid';
+    emoji.textContent = '📚';
+    comment.textContent = 'TRUNG BÌNH. Cần ôn tập thêm nhiều hơn. Đặc biệt chú ý phần đọc hiểu và ngữ pháp!';
+  } else {
+    numEl.className = 'score-num low';
+    emoji.textContent = '💪';
+    comment.textContent = 'CẦN CỐ GẮNG NHIỀU HƠN! Đừng nản lòng – luyện tập mỗi ngày và hỏi thầy cô khi không hiểu!';
+  }
+
+  modal.classList.add('show');
+  if (right >= 28) spawnConfetti();
+}
+
+// Load voices
+window.speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done. Size: $(wc -c < /mnt/user-data/outputs/de29_vao10_hn_2026.html) bytes"
